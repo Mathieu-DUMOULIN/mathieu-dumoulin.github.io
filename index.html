@@ -1,0 +1,728 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio - Mathieu DUMOULIN</title>
+    <style>
+        /* === VARIABLES & RESET === */
+        :root {
+            --bg-color: #f7f5f0;
+            --card-bg: #ffffff;
+            --text-main: #1a1a1a;
+            --text-muted: #666666;
+            --accent-color: #8a3f2b;
+            --border-radius: 20px;
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.6;
+            padding: 2rem 5%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        /* === HEADER === */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 5rem;
+        }
+
+        .logo {
+            font-weight: 700;
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-muted);
+        }
+        .logo span {
+            display: block;
+            color: var(--text-main);
+            text-transform: none;
+            font-size: 1.1rem;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--text-muted);
+            margin: 0 1rem;
+            font-size: 0.9rem;
+            transition: var(--transition);
+        }
+        nav a:hover {
+            color: var(--text-main);
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 1rem;
+        }
+
+        /* === BUTTONS === */
+        .btn {
+            padding: 0.6rem 1.2rem;
+            border-radius: 12px;
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: var(--transition);
+            border: 1px solid transparent;
+        }
+        
+        .btn-black {
+            background-color: #1a1a1a;
+            color: #ffffff;
+        }
+        .btn-black:hover {
+            background-color: #333;
+            transform: translateY(-2px);
+        }
+
+        .btn-white {
+            background-color: #ffffff;
+            color: #1a1a1a;
+            border: 1px solid #e0e0e0;
+        }
+        .btn-white:hover {
+            border-color: #1a1a1a;
+            transform: translateY(-2px);
+        }
+
+        /* === HERO SECTION === */
+        .hero {
+            display: flex;
+            gap: 4rem;
+            align-items: flex-start;
+            margin-bottom: 8rem;
+        }
+
+        .hero-content {
+            flex: 1;
+        }
+
+        .badge {
+            background-color: #ffffff;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            display: inline-block;
+            margin-bottom: 2rem;
+            border: 1px solid #eaeaea;
+        }
+
+        .hero-content h1 {
+            font-size: 3.5rem;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+        }
+        
+        .hero-content h1 .accent {
+            color: var(--accent-color);
+        }
+
+        .hero-content p {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            max-width: 90%;
+            margin-bottom: 2rem;
+        }
+
+        /* === PROFILE CARD (RIGHT) === */
+        .profile-card {
+            background-color: var(--card-bg);
+            padding: 2.5rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            width: 420px;
+            transition: var(--transition);
+        }
+        
+        .profile-card:hover {
+            transform: scale(1.02);
+        }
+
+        .profile-header {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-muted);
+            margin-bottom: 1rem;
+        }
+        
+        .status-badge {
+            background-color: #fdf6e3;
+            color: #b58900;
+            padding: 0.2rem 0.6rem;
+            border-radius: 10px;
+            font-weight: 600;
+        }
+
+        .profile-card h2 {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+        }
+
+        .profile-card p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            margin-bottom: 2rem;
+        }
+
+        .profile-image-placeholder {
+            width: 100%;
+            height: 250px;
+            background-color: #eaeaea;
+            border-radius: 12px;
+            margin-bottom: 1.5rem;
+            object-fit: cover;
+        }
+
+        /* NOUVEAU : Mini Cards (Formation / Alternance) */
+        .mini-cards-container {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .mini-card {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            border: 1px solid #eaeaea;
+            border-radius: 16px;
+            background-color: #fafafa;
+        }
+
+        .mini-card-icon {
+            width: 45px;
+            height: 45px;
+            background-color: #ffffff;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            border: 1px solid #eaeaea;
+            flex-shrink: 0;
+        }
+
+        .mini-card-text {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .mini-card-label {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-muted);
+            margin-bottom: 0.2rem;
+        }
+
+        .mini-card-value {
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: var(--text-main);
+            line-height: 1.3;
+        }
+
+        /* === SECTIONS COMMUNES === */
+        section {
+            margin-bottom: 8rem;
+        }
+
+        .section-header {
+            margin-bottom: 3rem;
+        }
+
+        .section-subtitle {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--text-muted);
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 600;
+            max-width: 600px;
+        }
+
+        /* Container divisé en 2 (Texte à gauche, Carte à droite) */
+        .split-container {
+            display: flex;
+            gap: 4rem;
+        }
+        
+        .split-text {
+            flex: 1;
+        }
+
+        .split-card {
+            flex: 2;
+            background-color: var(--card-bg);
+            padding: 3rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+        }
+
+        .split-card p {
+            margin-bottom: 1.5rem;
+            color: var(--text-muted);
+        }
+        .split-card p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* === STACK GRID (NOUVEAU) === */
+        .stack-grid {
+            flex: 2;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .stack-item {
+            background-color: var(--card-bg);
+            border-radius: 16px;
+            padding: 1.5rem 1rem;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+            border: 1px solid #eaeaea;
+            transition: var(--transition);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 0.8rem;
+        }
+
+        .stack-item:hover {
+            transform: scale(1.05);
+            box-shadow: var(--shadow);
+        }
+
+        .stack-item-icon {
+            font-size: 2.2rem;
+        }
+
+        .stack-item-name {
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: var(--text-main);
+        }
+
+        /* === EXPERTISE (GRILLE 4 CARTES) === */
+        .expertise-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            padding: 2.5rem 2rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .card:hover {
+            transform: scale(1.03);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.08);
+        }
+
+        .card-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+            border: 1px solid #eaeaea;
+        }
+
+        .card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+        }
+
+        .card p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .tag {
+            background-color: #f7f5f0;
+            border: 1px solid #eaeaea;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        /* === EXPERIENCES === */
+        .exp-header {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+            margin-bottom: 2rem;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+        
+        .exp-badge {
+            background-color: #f7f5f0;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            border: 1px solid #eaeaea;
+        }
+
+        .split-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--text-main);
+        }
+
+        .exp-list {
+            list-style: none;
+        }
+
+        .exp-list li {
+            position: relative;
+            padding-left: 2rem;
+            margin-bottom: 1.5rem;
+            color: var(--text-muted);
+        }
+
+        .exp-list li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            top: 0;
+            color: var(--accent-color);
+            font-weight: bold;
+        }
+
+        /* === CONTACT BANNER === */
+        .contact-banner {
+            background: linear-gradient(135deg, #ffffff 0%, #fdf4f2 100%);
+            padding: 4rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .contact-banner h2 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            max-width: 500px;
+        }
+
+        .contact-banner p {
+            color: var(--text-muted);
+            max-width: 500px;
+        }
+
+        /* === FOOTER === */
+        footer {
+            text-align: center;
+            padding: 2rem 0;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            border-top: 1px solid #eaeaea;
+        }
+
+        /* === RESPONSIVE === */
+        @media (max-width: 900px) {
+            .hero, .split-container {
+                flex-direction: column;
+            }
+            .profile-card {
+                width: 100%;
+            }
+            .contact-banner {
+                flex-direction: column;
+                text-align: center;
+                gap: 2rem;
+            }
+            nav {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- HEADER -->
+    <header>
+        <div class="logo">
+            PORTFOLIO
+            <span>Mathieu DUMOULIN</span>
+        </div>
+        <nav>
+            <a href="#about">À propos</a>
+            <a href="#stack">Stack</a>
+            <a href="#expertise">Expertise</a>
+            <a href="#experiences">Expériences</a>
+            <a href="#contact">Contact</a>
+        </nav>
+        <div class="header-actions">
+            <a href="https://www.linkedin.com/in/mathieu-dumoulin-7b1209303/" target="_blank" class="btn btn-black">
+                in LinkedIn
+            </a>
+            <a href="https://drive.google.com/file/d/1TMS-FET-TDGa1PqGznRv8P10YR2YcJvu/view?usp=sharing" target="_blank" class="btn btn-white">
+                📄 CV
+            </a>
+        </div>
+    </header>
+
+    <!-- HERO SECTION -->
+    <main class="hero">
+        <div class="hero-content">
+            <span class="badge">👋 Bonjour, bienvenue sur mon portfolio.</span>
+            <h1>
+                Étudiant en réseaux & <span class="accent">télécommunications,</span> je développe mes compétences en systèmes, réseaux et infrastructure.
+            </h1>
+            <p>
+                Au quotidien, j'assure le maintien en condition opérationnelle des réseaux de la Défense. J'interviens aussi bien sur le réseau maillé ancienne génération SOCRATE que sur la nouvelle boucle optique DESCARTES, avec une forte appétence pour le terrain et la résolution d'incidents.
+            </p>
+            <div class="header-actions" style="margin-top: 2rem;">
+                <a href="#experiences" class="btn btn-black">Voir mes expériences →</a>
+            </div>
+        </div>
+
+        <!-- CARTE DE PROFIL AVEC ONGLETS -->
+        <aside class="profile-card">
+            <div class="profile-header">
+                <span>GONDREVILLE · GRAND EST</span>
+                <span class="status-badge">En alternance actuellement</span>
+            </div>
+            
+            <img src="image_389918.jpg" alt="Mathieu Dumoulin" class="profile-image-placeholder">
+            
+            <h2>Mathieu DUMOULIN</h2>
+            <p style="margin-bottom: 1.5rem;">
+                Étudiant en 2e année de BUT Réseaux & Télécommunications, passionné par le maintien en condition opérationnelle et le diagnostic physique (fibre optique).
+            </p>
+
+            <!-- NOUVEAU : Petits onglets IUT et CAN -->
+            <div class="mini-cards-container">
+                <div class="mini-card">
+                    <div class="mini-card-icon">🎓</div>
+                    <div class="mini-card-text">
+                        <span class="mini-card-label">Formation</span>
+                        <span class="mini-card-value">BUT Réseaux & Télécoms · IUT Nancy-Brabois</span>
+                    </div>
+                </div>
+                <div class="mini-card">
+                    <div class="mini-card-icon">🛡️</div>
+                    <div class="mini-card-text">
+                        <span class="mini-card-label">Alternance Actuelle</span>
+                        <span class="mini-card-value">CAN NANCY · Ministère des Armées</span>
+                    </div>
+                </div>
+            </div>
+        </aside>
+    </main>
+
+    <!-- À PROPOS (NOUVEAU) -->
+    <section id="about">
+        <div class="split-container">
+            <div class="split-text">
+                <span class="section-subtitle">À propos</span>
+                <h2 class="section-title">En savoir un peu plus sur mon parcours.</h2>
+            </div>
+            <div class="split-card">
+                <p>Étudiant en 2ème année de BUT Réseaux et Télécommunications, je souhaite mettre mes compétences techniques et ma discipline au service des infrastructures critiques.</p>
+                <p>Mon parcours (parcours ROM - Réseaux Opérateurs Multimédia) m'a permis de développer de solides bases en routage (OSPF, statique), en adressage IP (IPv4), et en configuration d'équipements Cisco (switchs et routeurs).</p>
+                <p>L’exigence de mon alternance au sein du Centre d'Appui Numérique Nancy (Ministère des Armées) m’a permis de développer une rigueur professionnelle, un sens aigu de la confidentialité et du respect strict des procédures d'intervention.</p>
+                <p>Sportif pratiquant régulièrement la natation, la course à pied et le cyclisme en groupe, j'aborde les défis techniques avec le même esprit d'équipe et de persévérance.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- STACK / ENVIRONNEMENTS (NOUVEAU) -->
+    <section id="stack">
+        <div class="split-container">
+            <div class="split-text">
+                <span class="section-subtitle">Stack</span>
+                <h2 class="section-title">Les outils et environnements que j'utilise.</h2>
+                <p style="color: var(--text-muted); margin-top: 1.5rem;">
+                    Voici les principaux équipements, technos et environnements que j’ai déjà utilisés dans le cadre de ma formation et de mon alternance.
+                </p>
+            </div>
+            <div class="stack-grid">
+                <div class="stack-item">
+                    <span class="stack-item-icon">🖧</span>
+                    <span class="stack-item-name">Cisco</span>
+                </div>
+                <div class="stack-item">
+                    <span class="stack-item-icon">🌐</span>
+                    <span class="stack-item-name">IPv4 / OSPF</span>
+                </div>
+                <div class="stack-item">
+                    <span class="stack-item-icon">🔌</span>
+                    <span class="stack-item-name">VLAN</span>
+                </div>
+                <div class="stack-item">
+                    <span class="stack-item-icon">⚡</span>
+                    <span class="stack-item-name">Fibre Optique</span>
+                </div>
+                <div class="stack-item">
+                    <span class="stack-item-icon">💻</span>
+                    <span class="stack-item-name">Linux</span>
+                </div>
+                <div class="stack-item">
+                    <span class="stack-item-icon">🪟</span>
+                    <span class="stack-item-name">Windows Server</span>
+                </div>
+                <div class="stack-item">
+                    <span class="stack-item-icon">📡</span>
+                    <span class="stack-item-name">Sup. TLG</span>
+                </div>
+                <div class="stack-item">
+                    <span class="stack-item-icon">🛡️</span>
+                    <span class="stack-item-name">Pare-feux</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- EXPERTISE SECTION -->
+    <section id="expertise">
+        <div class="section-header">
+            <span class="section-subtitle">Expertise</span>
+            <h2 class="section-title">Compétences métiers.</h2>
+        </div>
+        <div class="expertise-grid">
+            <div class="card">
+                <div class="card-icon">🖧</div>
+                <h3>Réseaux & Infra</h3>
+                <p>Interventions sur les réseaux SOCRATE et DESCARTES. Configuration d'équipements et routage.</p>
+                <div class="tags">
+                    <span class="tag">Cisco</span>
+                    <span class="tag">VLAN</span>
+                    <span class="tag">OSPF</span>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-icon">🛠️</div>
+                <h3>Intervention Terrain</h3>
+                <p>Maintenance physique, soudures de fibre optique et diagnostics poussés sur des sites complexes.</p>
+                <div class="tags">
+                    <span class="tag">Fibre Optique</span>
+                    <span class="tag">Photomètre</span>
+                    <span class="tag">Réflectomètre</span>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-icon">📡</div>
+                <h3>Supervision & MCO</h3>
+                <p>Analyse de la supervision sur le TLG pour identifier les alertes. Maintien en Condition Opérationnelle.</p>
+                <div class="tags">
+                    <span class="tag">Supervision TLG</span>
+                    <span class="tag">Dépannage N1/N2</span>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-icon">📄</div>
+                <h3>Suivi & Documentation</h3>
+                <p>Le travail administratif indispensable post-intervention : rigueur et respect des procédures.</p>
+                <div class="tags">
+                    <span class="tag">Tickets d'incident</span>
+                    <span class="tag">Comptes-rendus</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- EXPERIENCES SECTION -->
+    <section id="experiences">
+        <div class="split-container">
+            <div class="split-text">
+                <span class="section-subtitle">Expériences</span>
+                <h2 class="section-title">Des expériences qui montrent ce que j'ai vraiment fait.</h2>
+                <p style="color: var(--text-muted); margin-top: 1.5rem;">
+                    Travailler en lien direct avec le CNMO-R m'a appris la rigueur et l'autonomie. Je sais identifier rapidement la source d'une panne pour réagir efficacement.
+                </p>
+            </div>
+            <div class="split-card">
+                <div class="exp-header">
+                    <span class="exp-badge">2024 — AUJOURD'HUI</span>
+                    <span>Ministère des Armées · Alternance</span>
+                </div>
+                <h3>Apprenti Technicien — Cellule d'Intervention Réseaux</h3>
+                <ul class="exp-list">
+                    <li>Analyse de la supervision sur le TLG pour identifier les alertes et préparer les interventions.</li>
+                    <li>Diagnostics poussés sur le terrain (photomètre, réflectomètre, soudures fibre optique) et configuration d'équipements Cisco / Pare-feux.</li>
+                    <li>Maintenance de routine et dépannage d'urgence sur réseaux SOCRATE et DESCARTES.</li>
+                    <li>Rédaction de comptes-rendus, clôture des tickets d'incident et mise à jour de l'inventaire logistique avec un strict respect de la confidentialité.</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- CONTACT BANNER -->
+    <section id="contact">
+        <div class="contact-banner">
+            <div>
+                <span class="section-subtitle">Contact</span>
+                <h2>Merci d'avoir pris le temps de parcourir mon portfolio.</h2>
+                <p>
+                    Vous pouvez retrouver ici les liens vers mon LinkedIn et mon CV. Le but est d'avoir un espace simple, clair et agréable pour présenter mon profil technique.
+                </p>
+            </div>
+            <div class="contact-actions">
+                <a href="https://www.linkedin.com/in/mathieu-dumoulin-7b1209303/" target="_blank" class="btn btn-black">
+                    in LinkedIn
+                </a>
+                <a href="https://drive.google.com/file/d/1TMS-FET-TDGa1PqGznRv8P10YR2YcJvu/view?usp=sharing" target="_blank" class="btn btn-white">
+                    📄 CV
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        © 2026 Mathieu DUMOULIN · portfolio
+    </footer>
+
+</body>
+</html>
