@@ -6,13 +6,12 @@
     <title>Portfolio - Mathieu DUMOULIN</title>
     <link rel="icon" type="image/x-icon" href="1454827.png">
     <style>
-        /* === VARIABLES & RESET === */
         :root {
             --bg-color: #f7f5f0;
             --card-bg: #ffffff;
             --text-main: #1a1a1a;
             --text-muted: #666666;
-            --accent-color: #0056b3; /* Modifié en bleu */
+            --accent-color: #0056b3;
             --border-radius: 20px;
             --shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
             --transition: all 0.3s ease;
@@ -40,8 +39,7 @@
             justify-content: space-between;
             align-items: center;
             margin-bottom: 5rem;
-            flex-wrap: wrap;
-            gap: 1.5rem;
+            position: relative;
         }
 
         .logo {
@@ -58,16 +56,15 @@
             font-size: 1.1rem;
         }
 
+        /* Navigation Bureau */
         nav {
             display: flex;
-            flex-wrap: wrap;
-            gap: 0.5rem;
+            gap: 1.5rem;
         }
 
         nav a {
             text-decoration: none;
             color: var(--text-muted);
-            margin: 0 0.8rem;
             font-size: 0.9rem;
             transition: var(--transition);
         }
@@ -78,6 +75,19 @@
         .header-actions {
             display: flex;
             gap: 1rem;
+            align-items: center;
+        }
+
+        /* Bouton Menu Hamburger (caché sur PC) */
+        .menu-toggle {
+            display: none;
+            background: var(--card-bg);
+            border: 1px solid #e0e0e0;
+            padding: 0.5rem 0.8rem;
+            border-radius: 12px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            box-shadow: var(--shadow);
         }
 
         /* === BUTTONS === */
@@ -144,9 +154,9 @@
             font-weight: 600;
         }
         
-        /* Effet de texte en dégradé bleu similaire à votre modèle */
+        /* Dégradé bleu sur le texte */
         .hero-content h1 .gradient-text {
-            background: linear-gradient(135deg, #0b3c5d 0%, #1d2731 50%, #328cc1 100%);
+            background: linear-gradient(135deg, #0b3c5d 0%, #1d6fa5 40%, #328cc1 70%, #ff4b5c 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
@@ -482,8 +492,36 @@
             border-top: 1px solid #eaeaea;
         }
 
-        /* === RESPONSIVE === */
+        /* === RESPONSIVE MOBILE (AVEC MENU HAMBURGER PROPRE) === */
         @media (max-width: 900px) {
+            body {
+                padding: 1rem 4%;
+            }
+            header {
+                margin-bottom: 3rem;
+            }
+            /* Cache les liens textuels sur mobile et affiche le bouton hamburger */
+            nav {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background: var(--card-bg);
+                flex-direction: column;
+                padding: 1.5rem;
+                border-radius: var(--border-radius);
+                box-shadow: var(--shadow);
+                gap: 1rem;
+                z-index: 100;
+                text-align: center;
+            }
+            nav.active {
+                display: flex;
+            }
+            .menu-toggle {
+                display: block;
+            }
             .hero, .split-container {
                 flex-direction: column;
             }
@@ -496,7 +534,7 @@
                 gap: 2rem;
             }
             .hero-content h1 {
-                font-size: 2.5rem;
+                font-size: 2.3rem;
             }
         }
     </style>
@@ -509,7 +547,7 @@
             PORTFOLIO
             <span>Mathieu DUMOULIN</span>
         </div>
-        <nav>
+        <nav id="nav-menu">
             <a href="#about">À propos</a>
             <a href="#stack">Stack</a>
             <a href="#expertise">Expertise</a>
@@ -523,6 +561,7 @@
             <a href="https://drive.google.com/file/d/1TMS-FET-TDGa1PqGznRv8P10YR2YcJvu/view?usp=sharing" target="_blank" class="btn btn-white">
                 📄 CV
             </a>
+            <button class="menu-toggle" id="menu-btn" aria-label="Menu">☰</button>
         </div>
     </header>
 
@@ -531,7 +570,7 @@
         <div class="hero-content">
             <span class="badge">👋 Bonjour, bienvenue sur mon portfolio.</span>
             <h1>
-                Étudiant en réseaux & <span class="gradient-text">télécommunications,</span> je développe mes compétences en systèmes, réseaux et infrastructure.
+                Étudiant en <span class="gradient-text">réseau et télécommunications,</span> je développe mes compétences en systèmes, réseaux et infrastructure.
             </h1>
             <p>
                 Au quotidien, j'assure le maintien en condition opérationnelle des réseaux de la Défense. J'interviens aussi bien sur le réseau maillé ancienne génération SOCRATE que sur la nouvelle boucle optique DESCARTES, avec une forte appétence pour le terrain et la résolution d'incidents.
@@ -541,7 +580,7 @@
             </div>
         </div>
 
-        <!-- CARTE DE PROFIL AVEC ONGLETS -->
+        <!-- CARTE DE PROFIL -->
         <aside class="profile-card">
             <div class="profile-header">
                 <span>GONDREVILLE · GRAND EST</span>
@@ -590,7 +629,7 @@
         </div>
     </section>
 
-    <!-- STACK / ENVIRONNEMENTS -->
+    <!-- STACK -->
     <section id="stack">
         <div class="split-container">
             <div class="split-text">
@@ -737,5 +776,21 @@
         © 2026 Mathieu DUMOULIN · portfolio
     </footer>
 
+    <!-- SCRIPT POUR ACTIVER LE MENU HAMBURGER SUR MOBILE -->
+    <script>
+        const menuBtn = document.getElementById('menu-btn');
+        const navMenu = document.getElementById('nav-menu');
+
+        menuBtn.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+        });
+
+        // Ferme le menu lorsqu'on clique sur un lien
+        document.querySelectorAll('nav a').forEach(link => {
+            link.addEventListener('click', () => {
+                navMenu.classList.remove('active');
+            });
+        });
+    </script>
 </body>
 </html>
