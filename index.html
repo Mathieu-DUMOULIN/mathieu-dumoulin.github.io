@@ -40,7 +40,7 @@
             margin: 0 auto;
         }
 
-        /* === HEADER === */
+        /* === HEADER (SANS STICKY) === */
         header {
             display: flex;
             justify-content: space-between;
@@ -50,10 +50,9 @@
             border-radius: 0 0 var(--border-radius) var(--border-radius);
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
             margin-bottom: 5rem;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
             border-bottom: 1px solid #e8e4dc;
+            position: relative;
+            z-index: 1000;
         }
 
         .logo {
@@ -571,7 +570,6 @@
             .header-actions {
                 gap: 0.5rem;
             }
-            /* Réduction de la taille des boutons sur mobile pour qu'ils tiennent dans le header beige */
             .header-actions .btn {
                 padding: 0.4rem 0.8rem;
                 font-size: 0.8rem;
