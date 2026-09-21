@@ -12,7 +12,7 @@
             --card-bg: #ffffff;
             --text-main: #1a1a1a;
             --text-muted: #666666;
-            --accent-color: #8a3f2b;
+            --accent-color: #0056b3; /* Modifié en bleu */
             --border-radius: 20px;
             --shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
             --transition: all 0.3s ease;
@@ -144,8 +144,11 @@
             font-weight: 600;
         }
         
-        .hero-content h1 .accent {
-            color: var(--accent-color);
+        /* Effet de texte en dégradé bleu similaire à votre modèle */
+        .hero-content h1 .gradient-text {
+            background: linear-gradient(135deg, #0b3c5d 0%, #1d2731 50%, #328cc1 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
         .hero-content p {
@@ -181,8 +184,8 @@
         }
         
         .status-badge {
-            background-color: #fdf6e3;
-            color: #b58900;
+            background-color: #e8f4fd;
+            color: #0b3c5d;
             padding: 0.2rem 0.6rem;
             border-radius: 10px;
             font-weight: 600;
@@ -208,7 +211,6 @@
             object-fit: cover;
         }
 
-        /* Mini Cards (Formation / Alternance) */
         .mini-cards-container {
             display: flex;
             flex-direction: column;
@@ -345,7 +347,7 @@
             color: var(--text-main);
         }
 
-        /* === EXPERTISE (GRILLE 4 CARTES) === */
+        /* === EXPERTISE === */
         .expertise-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -450,7 +452,7 @@
 
         /* === CONTACT BANNER === */
         .contact-banner {
-            background: linear-gradient(135deg, #ffffff 0%, #fdf4f2 100%);
+            background: linear-gradient(135deg, #ffffff 0%, #eef4f9 100%);
             padding: 4rem;
             border-radius: var(--border-radius);
             box-shadow: var(--shadow);
@@ -480,7 +482,7 @@
             border-top: 1px solid #eaeaea;
         }
 
-        /* === RESPONSIVE (SANS CACHER LA NAVIGATION) === */
+        /* === RESPONSIVE === */
         @media (max-width: 900px) {
             .hero, .split-container {
                 flex-direction: column;
@@ -529,7 +531,7 @@
         <div class="hero-content">
             <span class="badge">👋 Bonjour, bienvenue sur mon portfolio.</span>
             <h1>
-                Étudiant en réseaux & <span class="accent">télécommunications,</span> je développe mes compétences en systèmes, réseaux et infrastructure.
+                Étudiant en réseaux & <span class="gradient-text">télécommunications,</span> je développe mes compétences en systèmes, réseaux et infrastructure.
             </h1>
             <p>
                 Au quotidien, j'assure le maintien en condition opérationnelle des réseaux de la Défense. J'interviens aussi bien sur le réseau maillé ancienne génération SOCRATE que sur la nouvelle boucle optique DESCARTES, avec une forte appétence pour le terrain et la résolution d'incidents.
