@@ -56,7 +56,6 @@
             font-size: 1.1rem;
         }
 
-        /* Navigation Bureau */
         nav {
             display: flex;
             gap: 1.5rem;
@@ -78,7 +77,6 @@
             align-items: center;
         }
 
-        /* Bouton Menu Hamburger (caché sur PC) */
         .menu-toggle {
             display: none;
             background: var(--card-bg);
@@ -154,9 +152,9 @@
             font-weight: 600;
         }
         
-        /* Dégradé bleu sur le texte */
+        /* Dégradé de noir vers bleu */
         .hero-content h1 .gradient-text {
-            background: linear-gradient(135deg, #0b3c5d 0%, #1d6fa5 40%, #328cc1 70%, #ff4b5c 100%);
+            background: linear-gradient(135deg, #1a1a1a 0%, #0b3c5d 50%, #328cc1 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
@@ -492,7 +490,7 @@
             border-top: 1px solid #eaeaea;
         }
 
-        /* === RESPONSIVE MOBILE (AVEC MENU HAMBURGER PROPRE) === */
+        /* === RESPONSIVE MOBILE === */
         @media (max-width: 900px) {
             body {
                 padding: 1rem 4%;
@@ -500,7 +498,6 @@
             header {
                 margin-bottom: 3rem;
             }
-            /* Cache les liens textuels sur mobile et affiche le bouton hamburger */
             nav {
                 display: none;
                 position: absolute;
@@ -776,7 +773,7 @@
         © 2026 Mathieu DUMOULIN · portfolio
     </footer>
 
-    <!-- SCRIPT POUR ACTIVER LE MENU HAMBURGER SUR MOBILE -->
+    <!-- SCRIPT MENU HAMBURGER -->
     <script>
         const menuBtn = document.getElementById('menu-btn');
         const navMenu = document.getElementById('nav-menu');
@@ -785,7 +782,6 @@
             navMenu.classList.toggle('active');
         });
 
-        // Ferme le menu lorsqu'on clique sur un lien
         document.querySelectorAll('nav a').forEach(link => {
             link.addEventListener('click', () => {
                 navMenu.classList.remove('active');
