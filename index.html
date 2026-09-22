@@ -41,6 +41,30 @@
             margin: 0 auto;
         }
 
+        /* === CLASSES POUR VOS IMAGES === */
+        .custom-icon {
+            width: 35px; 
+            height: 35px;
+            object-fit: contain;
+        }
+        
+        .custom-icon-mini {
+            width: 24px; 
+            height: 24px;
+            object-fit: contain;
+        }
+
+        /* Classes spécifiques pour les logos avec beaucoup de marges transparentes ou rectangulaires */
+        .zoom-logo {
+            transform: scale(1.8); /* Zoom puissant pour Java et SQL */
+        }
+
+        .zoom-logo-mini {
+            width: 35px !important; /* Ajusté pour ne pas être trop grand */
+            height: 35px !important;
+            transform: scale(1.1); /* Zoom légèrement adouci pour l'IUT et le CND */
+        }
+
         /* === ÉCRAN DE CHARGEMENT (AVEC EFFET DE BRUME LUMINEUSE BLEUE / BEIGE) === */
         #loader-screen {
             position: fixed;
@@ -49,7 +73,6 @@
             width: 100%;
             height: 100%;
             background-color: var(--bg-color);
-            /* Effet de brume/halo lumineux en arrière-plan */
             background-image: 
                 radial-gradient(circle 400px at 50% 50%, rgba(49, 130, 193, 0.12) 0%, rgba(247, 245, 240, 0) 100%),
                 radial-gradient(circle 600px at 50% 50%, rgba(239, 236, 228, 0.8) 0%, transparent 100%);
@@ -107,7 +130,6 @@
             left: 0;
             height: 100%;
             width: 0%;
-            /* Dégradé bleu assorti au thème */
             background: linear-gradient(90deg, #0b3c5d 0%, #328cc1 100%);
             border-radius: 10px;
             animation: loading-progress 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
@@ -375,9 +397,9 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.2rem;
             border: 1px solid #eaeaea;
             flex-shrink: 0;
+            overflow: hidden;
         }
 
         .mini-card-text {
@@ -489,7 +511,9 @@
         }
 
         .stack-item-icon {
-            font-size: 2.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .stack-item-name {
@@ -774,7 +798,7 @@
                 Étudiant en <span class="gradient-text">réseau et télécommunications,</span> je développe mes compétences en systèmes, réseaux et infrastructure.
             </h1>
             <p>
-                Au quotidien, j'assure le maintien en condition opérationnelle des réseaux de la Défense. J'interviens aussi bien sur le réseau maillé ancienne génération SOCRATE que sur la nouvelle boucle optique DESCARTES, avec une forte appétence pour le terrain et la résolution d'incidents.
+                Au quotidien, j'assure le maintien en condition opérationnelle des réseaux de la Défense. J'interviens aussi bien sur le réseau maillé ancienne génération, que sur la nouvelle boucle optique national, avec une forte appétence pour le terrain et la résolution d'incidents.
             </p>
             <div class="header-actions" style="margin-top: 2rem;">
                 <a href="#experiences" class="btn btn-black">Voir mes expériences →</a>
@@ -784,27 +808,33 @@
         <!-- CARTE DE PROFIL -->
         <aside class="profile-card">
             <div class="profile-header">
-                <span>GONDREVILLE · GRAND EST</span>
+                <span>NANCY· GRAND EST</span>
                 <span class="status-badge"><span class="status-dot"></span>En alternance</span>
             </div>
             
-            <img src="IMG-20260911-WA0015(1)-EDIT.jpg" alt="Mathieu Dumoulin" class="profile-image-placeholder">
+            <img src="IMG_20240410_163227.jpg" alt="Mathieu Dumoulin" class="profile-image-placeholder">
             
             <h2>Mathieu DUMOULIN</h2>
             <p style="margin-bottom: 1.5rem;">
-                Étudiant en 2e année de BUT Réseaux & Télécommunications, passionné par le maintien en condition opérationnelle et le diagnostic physique (fibre optique).
+                Étudiant en 3e année de BUT Réseaux & télécommunications, actuellement en alternance au CAN de Nancy, en tant que technicien d'intervention réseau.
             </p>
 
             <div class="mini-cards-container">
                 <div class="mini-card">
-                    <div class="mini-card-icon">🎓</div>
+                    <div class="mini-card-icon">
+                        <!-- Logo IUT ajusté à une taille équilibrée -->
+                        <img src="logo-iut-violet.webp" alt="Formation" class="custom-icon-mini zoom-logo-mini">
+                    </div>
                     <div class="mini-card-text">
                         <span class="mini-card-label">Formation</span>
                         <span class="mini-card-value">BUT Réseaux & Télécoms · IUT Nancy-Brabois</span>
                     </div>
                 </div>
                 <div class="mini-card">
-                    <div class="mini-card-icon">🛡️</div>
+                    <div class="mini-card-icon">
+                        <!-- Logo CND ajusté -->
+                        <img src="Insigne_CND.png" alt="Alternance" class="custom-icon-mini zoom-logo-mini">
+                    </div>
                     <div class="mini-card-text">
                         <span class="mini-card-label">Alternance Actuelle</span>
                         <span class="mini-card-value">CAN NANCY · Ministère des Armées</span>
@@ -822,10 +852,10 @@
                 <h2 class="section-title">En savoir un peu plus sur mon parcours.</h2>
             </div>
             <div class="split-card">
-                <p>Étudiant en 2ème année de BUT Réseaux et Télécommunications, je souhaite mettre mes compétences techniques et ma discipline au service des infrastructures critiques.</p>
+                <p>Étudiant en 3ème année de BUT Réseaux et Télécommunications, je souhaite mettre mes compétences techniques et ma discipline au service des infrastructures critiques.</p>
                 <p>Mon parcours (parcours ROM - Réseaux Opérateurs Multimédia) m'a permis de développer de solides bases en routage (OSPF, statique), en adressage IP (IPv4), et en configuration d'équipements Cisco (switchs et routeurs).</p>
                 <p>L’exigence de mon alternance au sein du Centre d'Appui Numérique Nancy (Ministère des Armées) m’a permis de développer une rigueur professionnelle, un sens aigu de la confidentialité et du respect strict des procédures d'intervention.</p>
-                <p>Sportif pratiquant régulièrement la natation, la course à pied et le cyclisme en groupe, j'aborde les défis techniques avec le même esprit d'équipe et de persévérance.</p>
+    
             </div>
         </div>
     </section>
@@ -841,38 +871,70 @@
                 </p>
             </div>
             <div class="stack-grid">
+                
                 <div class="stack-item">
-                    <span class="stack-item-icon">🖧</span>
+                    <span class="stack-item-icon">
+                        <img src="Cisco-logo.png" alt="Cisco" class="custom-icon">
+                    </span>
                     <span class="stack-item-name">Cisco</span>
                 </div>
+                
                 <div class="stack-item">
-                    <span class="stack-item-icon">🌐</span>
-                    <span class="stack-item-name">IPv4 / OSPF</span>
-                </div>
-                <div class="stack-item">
-                    <span class="stack-item-icon">🔌</span>
+                    <span class="stack-item-icon">
+                        <img src="vlan.svg" alt="VLAN" class="custom-icon">
+                    </span>
                     <span class="stack-item-name">VLAN</span>
                 </div>
+                
                 <div class="stack-item">
-                    <span class="stack-item-icon">⚡</span>
+                    <span class="stack-item-icon">
+                        <img src="12667613-vecteur-d-icone-de-cable-a-fibre-optique-pour-la-conception-graphique-le-logo-le-site-web-les-medias-sociaux-l-application-mobile-l-illustration-de-l-interface-utilisateur-vectoriel.jpg" alt="Fibre Optique" class="custom-icon">
+                    </span>
                     <span class="stack-item-name">Fibre Optique</span>
                 </div>
+                
                 <div class="stack-item">
-                    <span class="stack-item-icon">💻</span>
+                    <span class="stack-item-icon">
+                        <img src="kisspng-colder-products-company-new-york-city-subway-organ-ununtu-operating-system-icons-5be4c4ec961f73.4996410915417192766149.jpg" alt="Linux" class="custom-icon">
+                    </span>
                     <span class="stack-item-name">Linux</span>
                 </div>
+                
                 <div class="stack-item">
-                    <span class="stack-item-icon">🪟</span>
-                    <span class="stack-item-name">Windows Server</span>
+                    <span class="stack-item-icon">
+                        <img src="external-Docker-Logo-social-media-those-icons-flat-those-icons.jpg" alt="Docker" class="custom-icon">
+                    </span>
+                    <span class="stack-item-name">Docker</span>
                 </div>
+
                 <div class="stack-item">
-                    <span class="stack-item-icon">📡</span>
-                    <span class="stack-item-name">Sup. TLG</span>
+                    <span class="stack-item-icon">
+                        <img src="Java-Logo.png" alt="Java" class="custom-icon zoom-logo">
+                    </span>
+                    <span class="stack-item-name">Java</span>
                 </div>
+
                 <div class="stack-item">
-                    <span class="stack-item-icon">🛡️</span>
-                    <span class="stack-item-name">Pare-feux</span>
+                    <span class="stack-item-icon">
+                        <img src="Microsoft_Office_Visio_(2019).svg.webp" alt="Visio" class="custom-icon">
+                    </span>
+                    <span class="stack-item-name">Visio</span>
                 </div>
+
+                <div class="stack-item">
+                    <span class="stack-item-icon">
+                        <img src="microsoft-sql-server-mysql-database-logo.jpg" alt="SQL" class="custom-icon zoom-logo">
+                    </span>
+                    <span class="stack-item-name">SQL</span>
+                </div>
+
+                <div class="stack-item">
+                    <span class="stack-item-icon">
+                        <img src="3162321.png" alt="VoIP" class="custom-icon">
+                    </span>
+                    <span class="stack-item-name">VoIP</span>
+                </div>
+
             </div>
         </div>
     </section>
@@ -887,7 +949,7 @@
             <div class="card">
                 <div class="card-icon">🖧</div>
                 <h3>Réseaux & Infra</h3>
-                <p>Interventions sur les réseaux SOCRATE et DESCARTES. Configuration d'équipements et routage.</p>
+                <p>Interventions sur les réseaux SOCRATE (Ancienne génération, PDM couplé à des liaisons hertziennes) et DESCARTES (Nouvelle génération, IP, principalement en fibre optique). Configuration d'équipements et routage.</p>
                 <div class="tags">
                     <span class="tag">Cisco</span>
                     <span class="tag">VLAN</span>
@@ -907,9 +969,9 @@
             <div class="card">
                 <div class="card-icon">📡</div>
                 <h3>Supervision & MCO</h3>
-                <p>Analyse de la supervision sur le TLG pour identifier les alertes. Maintien en Condition Opérationnelle.</p>
+                <p>Analyse de la supervision pour identifier les alertes. Maintien en Condition Opérationnelle.</p>
                 <div class="tags">
-                    <span class="tag">Supervision TLG</span>
+                    <span class="tag">Supervision</span>
                     <span class="tag">Dépannage N1/N2</span>
                 </div>
             </div>
@@ -932,19 +994,22 @@
                 <span class="section-subtitle">Expériences</span>
                 <h2 class="section-title">Des expériences qui montrent ce que j'ai vraiment fait.</h2>
                 <p style="color: var(--text-muted); margin-top: 1.5rem;">
-                    Travailler en lien direct avec le CNMO-R m'a appris la rigueur et l'autonomie. Je sais identifier rapidement la source d'une panne pour réagir efficacement.
+                    Je préfère montrer des missions concrètes plutôt qu’aligner des mots-clés. C’est ce qui permet de mieux comprendre mon profil.
                 </p>
             </div>
             <div class="split-card">
                 <div class="exp-header">
                     <span class="exp-badge">2024 — AUJOURD'HUI</span>
-                    <span>Ministère des Armées · Alternance</span>
+                    <div style="display: flex; align-items: center; gap: 8px;">
+                        <img src="Insigne_CND.png" alt="Logo CND" class="custom-icon-mini zoom-logo-mini">
+                        <span>Ministère des Armées · Alternance</span>
+                    </div>
                 </div>
                 <h3>Apprenti Technicien — Cellule d'Intervention Réseaux</h3>
                 <ul class="exp-list">
-                    <li>Analyse de la supervision sur le TLG pour identifier les alertes et préparer les interventions.</li>
-                    <li>Diagnostics poussés sur le terrain (photomètre, réflectomètre, soudures fibre optique) et configuration d'équipements Cisco / Pare-feux.</li>
-                    <li>Maintenance de routine et dépannage d'urgence sur réseaux SOCRATE et DESCARTES.</li>
+                    <li>Analyse de la supervision pour identifier les alertes et préparer les interventions.</li>
+                    <li>Diagnostics poussés sur le terrain (photomètre, réflectomètre, analyseur de spectre) et configuration d'équipements Cisco / Pare-feux.</li>
+                    <li>Maintenance de routine et dépannage sur réseaux SOCRATE et DESCARTES.</li>
                     <li>Rédaction de comptes-rendus, clôture des tickets d'incident et mise à jour de l'inventaire logistique avec un strict respect de la confidentialité.</li>
                 </ul>
             </div>
