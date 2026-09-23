@@ -4,6 +4,48 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Portfolio - Mathieu DUMOULIN</title>
+
+    <!-- SEO : description -->
+    <meta name="description" content="Portfolio de Mathieu Dumoulin, étudiant en BUT Réseaux & Télécommunications en alternance au Ministère des Armées (CAN Nancy). Réseaux, fibre optique, infrastructure, supervision.">
+    <meta name="author" content="Mathieu Dumoulin">
+
+    <!-- Open Graph (partage LinkedIn / réseaux sociaux) -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Portfolio - Mathieu DUMOULIN">
+    <meta property="og:description" content="Étudiant en BUT Réseaux & Télécommunications, en alternance au Ministère des Armées (CAN Nancy). Découvrez mon parcours, mes compétences et mes expériences.">
+    <meta property="og:image" content="images/IMG_20240410_163227.jpg">
+    <meta property="og:locale" content="fr_FR">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Portfolio - Mathieu DUMOULIN">
+    <meta name="twitter:description" content="Étudiant en BUT Réseaux & Télécommunications, en alternance au Ministère des Armées (CAN Nancy).">
+    <meta name="twitter:image" content="images/IMG_20240410_163227.jpg">
+
+    <!-- Données structurées Schema.org -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Mathieu Dumoulin",
+        "jobTitle": "Technicien d'intervention réseau (alternant)",
+        "description": "Étudiant en 3e année de BUT Réseaux & Télécommunications, en alternance au Centre d'Appui Numérique de Nancy (Ministère des Armées).",
+        "address": {
+            "@type": "PostalAddress",
+            "addressLocality": "Nancy",
+            "addressRegion": "Grand Est",
+            "addressCountry": "FR"
+        },
+        "sameAs": [
+            "https://www.linkedin.com/in/mathieu-dumoulin-7b1209303/"
+        ],
+        "alumniOf": {
+            "@type": "CollegeOrUniversity",
+            "name": "IUT Nancy-Brabois"
+        }
+    }
+    </script>
+
     <link rel="icon" type="image/x-icon" href="images/1454827.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -21,6 +63,10 @@
             --shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
             --shadow-hover: 0 20px 40px rgba(0, 0, 0, 0.08);
             --transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            --focus-ring: 0 0 0 3px rgba(50, 140, 193, 0.45);
+            --dark-bg: #0f2436;
+            --dark-bg-2: #17324a;
+            --dark-text-muted: rgba(255,255,255,0.65);
         }
 
         * {
@@ -39,6 +85,30 @@
             max-width: 1400px;
             margin: 0 auto;
             overflow-x: hidden; 
+        }
+
+        /* === ACCESSIBILITÉ : lien d'évitement + focus visible === */
+        .skip-link {
+            position: absolute;
+            top: -50px;
+            left: 1rem;
+            background: #1a1a1a;
+            color: #fff;
+            padding: 0.7rem 1.2rem;
+            border-radius: 10px;
+            z-index: 10000;
+            text-decoration: none;
+            font-weight: 600;
+            transition: top 0.25s ease;
+        }
+        .skip-link:focus { top: 1rem; }
+
+        a:focus-visible,
+        button:focus-visible,
+        .btn:focus-visible {
+            outline: none;
+            box-shadow: var(--focus-ring);
+            border-radius: 10px;
         }
 
         /* === ÉCRAN DE CHARGEMENT === */
@@ -83,6 +153,7 @@
         nav { display: flex; gap: 1.5rem; }
         nav a { text-decoration: none; color: var(--text-muted); font-size: 0.9rem; transition: var(--transition); font-weight: 500; }
         nav a:hover { color: var(--accent-color); }
+        nav a.active-link { color: var(--accent-color); font-weight: 700; }
         .header-actions { display: flex; gap: 0.8rem; align-items: center; }
         .menu-toggle { display: none; background: var(--card-bg); border: 1px solid #e0e0e0; padding: 0.5rem 0.7rem; border-radius: 12px; font-size: 1.2rem; cursor: pointer; box-shadow: var(--shadow); transition: var(--transition); }
         .menu-toggle:active { transform: scale(0.92); }
@@ -91,26 +162,38 @@
         .btn:active { transform: scale(0.96) !important; }
         .btn-black { background-color: #1a1a1a; color: #ffffff; }
         .btn-black:hover { background-color: #333; transform: translateY(-3px); box-shadow: 0 6px 20px rgba(0,0,0,0.15); }
-        .btn-white { background-color: #ffffff; color: #1a1a1a; border: 1px solid #e0e0e0; }
-        .btn-white:hover { border-color: #1a1a1a; transform: translateY(-3px); box-shadow: 0 6px 20px rgba(0,0,0,0.06); }
+        .btn-white { background-color: #ffffff; color: #1a1a1a; border: 1px solid #dde6ec; }
+        .btn-white:hover { border-color: #328cc1; color: #0b3c5d; transform: translateY(-3px); box-shadow: 0 6px 20px rgba(50, 140, 193, 0.15); }
 
         /* === HERO SECTION === */
         .hero { 
-            position: relative; /* IMPORTANT: Retient les particules à l'intérieur */
+            position: relative; 
             display: flex; gap: 4rem; align-items: flex-start; margin-bottom: 8rem; padding-top: 1rem;
+        }
+
+        .hero::before {
+            content: "";
+            position: absolute;
+            top: -30px; left: -5%;
+            width: 110%; height: calc(100% + 60px);
+            background-image: radial-gradient(rgba(11, 60, 93, 0.13) 1.5px, transparent 1.5px);
+            background-size: 26px 26px;
+            -webkit-mask-image: radial-gradient(ellipse 60% 70% at 30% 20%, black 0%, transparent 75%);
+            mask-image: radial-gradient(ellipse 60% 70% at 30% 20%, black 0%, transparent 75%);
+            z-index: -2;
+            pointer-events: none;
         }
 
         /* === PARTICULES LIMITÉES AU HERO === */
         #particles-canvas {
             position: absolute;
-            top: -50px; /* Monte légèrement derrière le header */
+            top: -50px; 
             left: 50%;
             transform: translateX(-50%);
-            width: 100vw; /* Prend toute la largeur de l'écran */
-            height: calc(100% + 100px); /* Prend toute la hauteur du hero */
+            width: 100vw; 
+            height: calc(100% + 100px); 
             z-index: -1; 
             pointer-events: none; 
-            /* Créé un fondu en bas pour ne pas avoir de coupure nette avec la section en dessous */
             -webkit-mask-image: linear-gradient(to bottom, black 80%, transparent 100%);
             mask-image: linear-gradient(to bottom, black 80%, transparent 100%);
         }
@@ -120,32 +203,34 @@
         /* === ANIMATION DU BADGE === */
         .badge { 
             background-color: #ffffff; padding: 0.5rem 1rem; border-radius: 20px; font-size: 0.85rem; color: var(--text-muted); display: inline-block; margin-bottom: 2rem; border: 1px solid #eaeaea; box-shadow: 0 4px 15px rgba(0,0,0,0.04); 
-            /* Point de départ de l'animation */
             opacity: 0;
             transform: scale(0.85) translateY(15px);
             transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
         }
-        
-        /* Classe ajoutée par JS pour faire apparaître le badge */
-        .badge.show-badge {
-            opacity: 1;
-            transform: scale(1) translateY(0);
-        }
+        .badge.show-badge { opacity: 1; transform: scale(1) translateY(0); }
 
         /* === EFFET MACHINE À ÉCRIRE === */
-        .hero-content h1 {
-            font-size: 3.5rem;
-            line-height: 1.1;
-            margin-bottom: 1.5rem;
-            font-weight: 700;
-            min-height: 160px;
+        .hero-content h1 { font-size: 3.5rem; line-height: 1.1; margin-bottom: 1.5rem; font-weight: 700; min-height: 160px; letter-spacing: -0.01em; }
+        .hero-content h1 .gradient-text {
+            background: linear-gradient(135deg, #0b3c5d 0%, #1d6fa5 50%, #328cc1 100%);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            position: relative;
+            display: inline;
         }
-        .hero-content h1 .gradient-text { background: linear-gradient(135deg, #0b3c5d 0%, #1d6fa5 50%, #328cc1 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .hero-content h1 .gradient-text::after {
+            content: "";
+            position: absolute;
+            left: 0; bottom: -0.08em;
+            width: 100%; height: 0.09em;
+            background: linear-gradient(90deg, var(--accent-color), #328cc1);
+            border-radius: 4px;
+            opacity: 0.55;
+        }
         .cursor { display: inline-block; width: 4px; height: 0.9em; background-color: var(--text-main); margin-left: 4px; vertical-align: middle; animation: blink 1s step-end infinite; }
         @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
         .hero-content p { color: var(--text-muted); font-size: 1.1rem; max-width: 90%; margin-bottom: 2rem; }
 
-        /* === RESTE DU CSS (CARTES, SECTIONS, ETC.) === */
+        /* === RESTE DU CSS === */
         .profile-card { background-color: var(--card-bg); padding: 2.5rem; border-radius: var(--border-radius); box-shadow: var(--shadow); width: 420px; transition: var(--transition); flex-shrink: 0; border: 1px solid #f0eee6; z-index: 2; }
         .profile-card:hover { transform: translateY(-5px); box-shadow: var(--shadow-hover); }
         .profile-header { display: flex; justify-content: space-between; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px; color: var(--text-muted); margin-bottom: 1rem; }
@@ -154,7 +239,18 @@
         @keyframes pulse-green { 0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(13, 138, 79, 0.4); } 70% { transform: scale(1); box-shadow: 0 0 0 6px rgba(13, 138, 79, 0); } 100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(13, 138, 79, 0); } }
         .profile-card h2 { font-size: 1.8rem; margin-bottom: 1rem; }
         .profile-card p { color: var(--text-muted); font-size: 0.95rem; margin-bottom: 2rem; }
-        .profile-image-placeholder { width: 100%; height: 250px; background-color: #eaeaea; border-radius: 12px; margin-bottom: 1.5rem; object-fit: cover; }
+        .profile-image-wrap { position: relative; margin-bottom: 1.5rem; }
+        .profile-image-wrap::before {
+            content: "";
+            position: absolute;
+            top: -10px; right: -10px;
+            width: 100%; height: 250px;
+            border: 2px solid var(--accent-color);
+            border-radius: 12px;
+            opacity: 0.5;
+            z-index: 0;
+        }
+        .profile-image-placeholder { position: relative; z-index: 1; width: 100%; height: 250px; background-color: #eaeaea; border-radius: 12px; object-fit: cover; display: block; }
         .mini-cards-container { display: flex; flex-direction: column; gap: 1rem; }
         .mini-card { display: flex; align-items: center; gap: 1rem; padding: 1rem; border: 1px solid #eaeaea; border-radius: 16px; background-color: #fafafa; transition: var(--transition); }
         .mini-card:hover { background-color: #ffffff; border-color: #ddd; }
@@ -168,7 +264,7 @@
         .zoom-logo { transform: scale(1.8); }
         .zoom-logo-mini { width: 35px !important; height: 35px !important; transform: scale(1.1); }
 
-        /* === ANIMATIONS AU DÉFILEMENT (RALENTIES) === */
+        /* === ANIMATIONS AU DÉFILEMENT === */
         .fade-in-up { opacity: 0; transform: translateY(40px); transition: opacity 1.5s cubic-bezier(0.16, 1, 0.3, 1), transform 1.5s cubic-bezier(0.16, 1, 0.3, 1); }
         .fade-in-left { opacity: 0; transform: translateX(-40px); transition: opacity 1.5s cubic-bezier(0.16, 1, 0.3, 1), transform 1.5s cubic-bezier(0.16, 1, 0.3, 1); }
         .fade-in-right { opacity: 0; transform: translateX(40px); transition: opacity 1.5s cubic-bezier(0.16, 1, 0.3, 1), transform 1.5s cubic-bezier(0.16, 1, 0.3, 1); }
@@ -180,7 +276,7 @@
 
         section { margin-bottom: 8rem; }
         .section-header { margin-bottom: 3rem; }
-        .section-subtitle { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px; color: var(--text-muted); margin-bottom: 1rem; display: block; font-weight: 600; }
+        .section-subtitle { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px; color: var(--accent-color); margin-bottom: 1rem; display: block; font-weight: 700; }
         .section-title { font-size: 2.5rem; font-weight: 700; max-width: 600px; }
         .split-container { display: flex; gap: 4rem; }
         .split-text { flex: 1; }
@@ -192,29 +288,72 @@
         .stack-grid { flex: 2; display: grid; grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); gap: 1.5rem; }
         .stack-item { background-color: var(--card-bg); border-radius: 16px; padding: 1.5rem 1rem; text-align: center; box-shadow: 0 4px 15px rgba(0,0,0,0.02); border: 1px solid #eaeaea; transition: var(--transition); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.8rem; }
         .stack-item:hover { transform: translateY(-4px); border-color: #d0c7bd; box-shadow: var(--shadow-hover); }
+        .stack-item:hover .stack-item-icon img { filter: grayscale(0) opacity(1); }
         .stack-item:active { transform: scale(0.95); }
-        .stack-item-icon { display: flex; align-items: center; justify-content: center; }
+        .stack-item-icon {
+            display: flex; align-items: center; justify-content: center;
+            width: 52px; height: 52px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%);
+            border: 1px solid #eaeaea;
+            overflow: hidden;
+        }
+        .stack-item-icon img { max-width: 60%; max-height: 60%; filter: grayscale(0.45) opacity(0.85); transition: var(--transition); }
         .stack-item-name { font-size: 0.85rem; font-weight: 600; color: var(--text-main); }
 
-        .expertise-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; }
-        .card { background-color: var(--card-bg); padding: 2.5rem 2rem; border-radius: var(--border-radius); box-shadow: var(--shadow); transition: var(--transition); border: 1px solid #f0eee6; }
-        .card:hover { transform: translateY(-5px); box-shadow: var(--shadow-hover); }
+        .section-dark {
+            background: linear-gradient(160deg, var(--dark-bg) 0%, var(--dark-bg-2) 100%);
+            border-radius: var(--border-radius);
+            padding: 4.5rem 4rem;
+            position: relative;
+            overflow: hidden;
+        }
+        .section-dark::before {
+            content: "";
+            position: absolute; inset: 0;
+            background-image: radial-gradient(rgba(255,255,255,0.06) 1.5px, transparent 1.5px);
+            background-size: 24px 24px;
+            -webkit-mask-image: radial-gradient(ellipse 70% 60% at 85% 15%, black 0%, transparent 70%);
+            mask-image: radial-gradient(ellipse 70% 60% at 85% 15%, black 0%, transparent 70%);
+            pointer-events: none;
+        }
+        .section-dark .section-subtitle { color: rgba(255,255,255,0.55); }
+        .section-dark .section-title { color: #ffffff; }
+
+        .expertise-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; position: relative; z-index: 1; }
+        .card { background-color: rgba(255,255,255,0.06); backdrop-filter: blur(6px); padding: 2.5rem 2rem; border-radius: var(--border-radius); transition: var(--transition); border: 1px solid rgba(255,255,255,0.12); }
+        .card:hover { transform: translateY(-5px); background-color: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.22); }
         .card:active { transform: scale(0.98); }
-        .card-icon { width: 50px; height: 50px; background: linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%); border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: 1.5rem; border: 1px solid #eaeaea; overflow: hidden; }
-        .card-icon img { width: 24px; height: 24px; object-fit: contain; }
-        .card h3 { font-size: 1.3rem; margin-bottom: 1rem; font-weight: 700; }
-        .card p { color: var(--text-muted); font-size: 0.95rem; margin-bottom: 1.5rem; }
+        .card-icon { width: 50px; height: 50px; background: linear-gradient(135deg, rgba(255,255,255,0.14) 0%, rgba(255,255,255,0.04) 100%); border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: 1.5rem; border: 1px solid rgba(255,255,255,0.14); overflow: hidden; }
+        .card-icon img { width: 24px; height: 24px; object-fit: contain; filter: brightness(0) invert(1); opacity: 0.9; }
+        .card h3 { font-size: 1.3rem; margin-bottom: 1rem; font-weight: 700; color: #ffffff; }
+        .card p { color: var(--dark-text-muted); font-size: 0.95rem; margin-bottom: 1.5rem; }
         .tags { display: flex; flex-wrap: wrap; gap: 0.5rem; }
-        .tag { background-color: #f7f5f0; border: 1px solid #eaeaea; padding: 0.3rem 0.8rem; border-radius: 20px; font-size: 0.8rem; color: var(--text-muted); font-weight: 500; }
+        .tag { background-color: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.18); padding: 0.3rem 0.8rem; border-radius: 20px; font-size: 0.8rem; color: rgba(255,255,255,0.8); font-weight: 500; }
 
         .exp-header { display: flex; gap: 1rem; align-items: center; margin-bottom: 2rem; font-size: 0.85rem; color: var(--text-muted); flex-wrap: wrap; }
         .exp-badge { background-color: #f7f5f0; padding: 0.3rem 0.8rem; border-radius: 20px; border: 1px solid #eaeaea; font-weight: 600; }
         .split-card h3 { font-size: 1.5rem; margin-bottom: 1.5rem; color: var(--text-main); font-weight: 700; }
-        .exp-list { list-style: none; }
-        .exp-list li { position: relative; padding-left: 2rem; margin-bottom: 1.5rem; color: var(--text-muted); }
-        .exp-list li::before { content: "✓"; position: absolute; left: 0; top: 0; color: var(--accent-color); font-weight: bold; }
+        .exp-list { list-style: none; position: relative; }
+        .exp-list::before {
+            content: "";
+            position: absolute;
+            left: 5px; top: 6px; bottom: 6px;
+            width: 2px;
+            background: linear-gradient(180deg, var(--accent-color), rgba(138, 63, 43, 0.15));
+        }
+        .exp-list li { position: relative; padding-left: 2.2rem; margin-bottom: 1.5rem; color: var(--text-muted); }
+        .exp-list li::before {
+            content: "";
+            position: absolute; left: 0; top: 0.35rem;
+            width: 12px; height: 12px;
+            border-radius: 50%;
+            background: var(--card-bg);
+            border: 2px solid var(--accent-color);
+            z-index: 1;
+        }
 
-        .contact-banner { background: linear-gradient(135deg, #ffffff 0%, #eef4f9 100%); padding: 4rem; border-radius: var(--border-radius); box-shadow: var(--shadow); display: flex; justify-content: space-between; align-items: center; gap: 2rem; border: 1px solid #f0eee6; transition: var(--transition); }
+        .contact-banner { background: linear-gradient(135deg, #ffffff 0%, #eef4f9 100%); padding: 4rem; border-radius: var(--border-radius); box-shadow: var(--shadow); display: flex; justify-content: space-between; align-items: center; gap: 2rem; border: 1px solid #f0eee6; border-left: 4px solid var(--accent-color); transition: var(--transition); }
         .contact-banner:hover { box-shadow: var(--shadow-hover); }
         .contact-banner h2 { font-size: 2rem; margin-bottom: 1rem; max-width: 500px; font-weight: 700; }
         .contact-banner p { color: var(--text-muted); max-width: 500px; }
@@ -237,9 +376,24 @@
             .contact-banner { flex-direction: column; text-align: center; gap: 2rem; padding: 2rem 1.5rem; }
             .hero-content h1 { font-size: 2.1rem; min-height: 120px; }
         }
+
+        /* === ACCESSIBILITÉ : réduction des animations === */
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+                scroll-behavior: auto !important;
+            }
+            .fade-in-up, .fade-in-left, .fade-in-right { opacity: 1 !important; transform: none !important; }
+            #particles-canvas { display: none !important; }
+        }
     </style>
 </head>
 <body>
+
+    <!-- LIEN D'ÉVITEMENT (ACCESSIBILITÉ) -->
+    <a href="#main-content" class="skip-link">Aller au contenu principal</a>
 
     <!-- ÉCRAN DE CHARGEMENT -->
     <div id="loader-screen">
@@ -267,28 +421,28 @@
             <a href="#contact">Contact</a>
         </nav>
         <div class="header-actions">
-            <a href="https://www.linkedin.com/in/mathieu-dumoulin-7b1209303/" target="_blank" class="btn btn-black">
+            <a href="https://www.linkedin.com/in/mathieu-dumoulin-7b1209303/" target="_blank" rel="noopener noreferrer" class="btn btn-black">
                 in LinkedIn
             </a>
-            <a href="https://drive.google.com/file/d/1TMS-FET-TDGa1PqGznRv8P10YR2YcJvu/view?usp=sharing" target="_blank" class="btn btn-white">
+            <a href="https://drive.google.com/file/d/1TMS-FET-TDGa1PqGznRv8P10YR2YcJvu/view?usp=sharing" target="_blank" rel="noopener noreferrer" class="btn btn-white">
                 📄 CV
             </a>
-            <button class="menu-toggle" id="menu-btn" aria-label="Menu">☰</button>
+            <button class="menu-toggle" id="menu-btn" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="nav-menu">☰</button>
         </div>
     </header>
 
     <!-- HERO SECTION -->
     <main class="hero" id="hero-section">
+        <div id="main-content"></div>
         
-        <!-- CANVAS POUR L'ARRIÈRE-PLAN PARTICULES (limité à cette section) -->
-        <canvas id="particles-canvas"></canvas>
+        <!-- CANVAS POUR L'ARRIÈRE-PLAN PARTICULES -->
+        <canvas id="particles-canvas" aria-hidden="true"></canvas>
 
         <div class="hero-content fade-in-left">
-            <!-- Ajout de l'ID pour l'animation du badge -->
             <span class="badge" id="welcome-badge">👋 Bonjour, bienvenue sur mon portfolio.</span>
             
             <h1>
-                <span id="type-part1"></span><span class="gradient-text" id="type-part2"></span><span id="type-part3"></span><span class="cursor"></span>
+                <span id="type-part1"></span><span class="gradient-text" id="type-part2"></span><span id="type-part3"></span><span class="cursor" aria-hidden="true"></span>
             </h1>
             
             <p>
@@ -306,7 +460,9 @@
                 <span class="status-badge"><span class="status-dot"></span>En alternance</span>
             </div>
             
-            <img src="images/IMG_20240410_163227.jpg" alt="Mathieu Dumoulin" class="profile-image-placeholder">
+            <div class="profile-image-wrap">
+                <img src="images/IMG_20240410_163227.jpg" alt="Mathieu Dumoulin" class="profile-image-placeholder">
+            </div>
             
             <h2>Mathieu DUMOULIN</h2>
             <p style="margin-bottom: 1.5rem;">
@@ -316,7 +472,7 @@
             <div class="mini-cards-container">
                 <div class="mini-card">
                     <div class="mini-card-icon">
-                        <img src="images/logo-iut-violet.webp" alt="Formation" class="custom-icon-mini zoom-logo-mini">
+                        <img src="images/logo-iut-violet.webp" alt="Formation" class="custom-icon-mini zoom-logo-mini" loading="lazy">
                     </div>
                     <div class="mini-card-text">
                         <span class="mini-card-label">Formation</span>
@@ -325,7 +481,7 @@
                 </div>
                 <div class="mini-card">
                     <div class="mini-card-icon">
-                        <img src="images/Insigne_CND.png" alt="Alternance" class="custom-icon-mini zoom-logo-mini">
+                        <img src="images/Insigne_CND.png" alt="Alternance" class="custom-icon-mini zoom-logo-mini" loading="lazy">
                     </div>
                     <div class="mini-card-text">
                         <span class="mini-card-label">Alternance Actuelle</span>
@@ -363,39 +519,39 @@
             </div>
             <div class="stack-grid">
                 <div class="stack-item fade-in-up">
-                    <span class="stack-item-icon"><img src="images/Cisco-logo.png" alt="Cisco" class="custom-icon"></span>
+                    <span class="stack-item-icon"><img src="images/Cisco-logo.png" alt="Cisco" class="custom-icon" loading="lazy"></span>
                     <span class="stack-item-name">Cisco</span>
                 </div>
                 <div class="stack-item fade-in-up delay-1">
-                    <span class="stack-item-icon"><img src="images/vlan.svg" alt="VLAN" class="custom-icon"></span>
+                    <span class="stack-item-icon"><img src="images/vlan.svg" alt="VLAN" class="custom-icon" loading="lazy"></span>
                     <span class="stack-item-name">VLAN</span>
                 </div>
                 <div class="stack-item fade-in-up delay-2">
-                    <span class="stack-item-icon"><img src="images/12667613-vecteur-d-icone-de-cable-a-fibre-optique-pour-la-conception-graphique-le-logo-le-site-web-les-medias-sociaux-l-application-mobile-l-illustration-de-l-interface-utilisateur-vectoriel.jpg" alt="Fibre Optique" class="custom-icon"></span>
+                    <span class="stack-item-icon"><img src="images/12667613-vecteur-d-icone-de-cable-a-fibre-optique-pour-la-conception-graphique-le-logo-le-site-web-les-medias-sociaux-l-application-mobile-l-illustration-de-l-interface-utilisateur-vectoriel.jpg" alt="Fibre Optique" class="custom-icon" loading="lazy"></span>
                     <span class="stack-item-name">Fibre Optique</span>
                 </div>
                 <div class="stack-item fade-in-up delay-3">
-                    <span class="stack-item-icon"><img src="images/kisspng-colder-products-company-new-york-city-subway-organ-ununtu-operating-system-icons-5be4c4ec961f73.4996410915417192766149.jpg" alt="Linux" class="custom-icon"></span>
+                    <span class="stack-item-icon"><img src="images/kisspng-colder-products-company-new-york-city-subway-organ-ununtu-operating-system-icons-5be4c4ec961f73.4996410915417192766149.jpg" alt="Linux" class="custom-icon" loading="lazy"></span>
                     <span class="stack-item-name">Linux</span>
                 </div>
                 <div class="stack-item fade-in-up delay-4">
-                    <span class="stack-item-icon"><img src="images/external-Docker-Logo-social-media-those-icons-flat-those-icons.jpg" alt="Docker" class="custom-icon"></span>
+                    <span class="stack-item-icon"><img src="images/external-Docker-Logo-social-media-those-icons-flat-those-icons.jpg" alt="Docker" class="custom-icon" loading="lazy"></span>
                     <span class="stack-item-name">Docker</span>
                 </div>
                 <div class="stack-item fade-in-up">
-                    <span class="stack-item-icon"><img src="images/Java-Logo.png" alt="Java" class="custom-icon zoom-logo"></span>
+                    <span class="stack-item-icon"><img src="images/Java-Logo.png" alt="Java" class="custom-icon zoom-logo" loading="lazy"></span>
                     <span class="stack-item-name">Java</span>
                 </div>
                 <div class="stack-item fade-in-up delay-1">
-                    <span class="stack-item-icon"><img src="images/Microsoft_Office_Visio_(2019).svg.webp" alt="Visio" class="custom-icon"></span>
+                    <span class="stack-item-icon"><img src="images/Microsoft_Office_Visio_(2019).svg.webp" alt="Visio" class="custom-icon" loading="lazy"></span>
                     <span class="stack-item-name">Visio</span>
                 </div>
                 <div class="stack-item fade-in-up delay-2">
-                    <span class="stack-item-icon"><img src="images/microsoft-sql-server-mysql-database-logo.jpg" alt="SQL" class="custom-icon zoom-logo"></span>
+                    <span class="stack-item-icon"><img src="images/microsoft-sql-server-mysql-database-logo.jpg" alt="SQL" class="custom-icon zoom-logo" loading="lazy"></span>
                     <span class="stack-item-name">SQL</span>
                 </div>
                 <div class="stack-item fade-in-up delay-3">
-                    <span class="stack-item-icon"><img src="images/3162321.png" alt="VoIP" class="custom-icon"></span>
+                    <span class="stack-item-icon"><img src="images/3162321.png" alt="VoIP" class="custom-icon" loading="lazy"></span>
                     <span class="stack-item-name">VoIP</span>
                 </div>
             </div>
@@ -404,35 +560,37 @@
 
     <!-- EXPERTISE SECTION -->
     <section id="expertise">
+        <div class="section-dark">
         <div class="section-header fade-in-up">
             <span class="section-subtitle">Expertise</span>
             <h2 class="section-title">Compétences métiers.</h2>
         </div>
         <div class="expertise-grid">
             <div class="card fade-in-up">
-                <div class="card-icon"><img src="images/reseaux-infra.png" alt="Réseaux & Infra"></div>
+                <div class="card-icon"><img src="images/reseaux-infra.png" alt="Réseaux & Infra" loading="lazy"></div>
                 <h3>Réseaux & Infra</h3>
                 <p>Interventions sur les réseaux SOCRATE et DESCARTES. Configuration d'équipements et routage.</p>
                 <div class="tags"><span class="tag">Cisco</span><span class="tag">VLAN</span><span class="tag">OSPF</span></div>
             </div>
             <div class="card fade-in-up delay-1">
-                <div class="card-icon"><img src="images/intervention-terrain.png" alt="Intervention Terrain"></div>
+                <div class="card-icon"><img src="images/intervention-terrain.png" alt="Intervention Terrain" loading="lazy"></div>
                 <h3>Intervention Terrain</h3>
                 <p>Maintenance physique, soudures de fibre optique et diagnostics poussés sur des sites complexes.</p>
                 <div class="tags"><span class="tag">Fibre Optique</span><span class="tag">Photomètre</span><span class="tag">Réflectomètre</span></div>
             </div>
             <div class="card fade-in-up delay-2">
-                <div class="card-icon"><img src="images/supervision.png" alt="Supervision & MCO"></div>
+                <div class="card-icon"><img src="images/supervision.png" alt="Supervision & MCO" loading="lazy"></div>
                 <h3>Supervision & MCO</h3>
                 <p>Analyse de la supervision pour identifier les alertes. Maintien en Condition Opérationnelle.</p>
                 <div class="tags"><span class="tag">Supervision</span><span class="tag">Dépannage N1/N2</span></div>
             </div>
             <div class="card fade-in-up delay-3">
-                <div class="card-icon"><img src="images/documentation.png" alt="Suivi & Documentation"></div>
+                <div class="card-icon"><img src="images/documentation.png" alt="Suivi & Documentation" loading="lazy"></div>
                 <h3>Suivi & Documentation</h3>
                 <p>Le travail administratif indispensable post-intervention : rigueur et respect des procédures.</p>
                 <div class="tags"><span class="tag">Tickets d'incident</span><span class="tag">Comptes-rendus</span></div>
             </div>
+        </div>
         </div>
     </section>
 
@@ -450,7 +608,7 @@
                 <div class="exp-header">
                     <span class="exp-badge">2024 — AUJOURD'HUI</span>
                     <div style="display: flex; align-items: center; gap: 8px;">
-                        <img src="images/Insigne_CND.png" alt="Logo CND" class="custom-icon-mini zoom-logo-mini">
+                        <img src="images/Insigne_CND.png" alt="Logo CND" class="custom-icon-mini zoom-logo-mini" loading="lazy">
                         <span>Ministère des Armées · Alternance</span>
                     </div>
                 </div>
@@ -474,8 +632,8 @@
                 <p>Vous pouvez retrouver ici les liens vers mon LinkedIn et mon CV.</p>
             </div>
             <div class="contact-actions">
-                <a href="https://www.linkedin.com/in/mathieu-dumoulin-7b1209303/" target="_blank" class="btn btn-black">in LinkedIn</a>
-                <a href="https://drive.google.com/file/d/1TMS-FET-TDGa1PqGznRv8P10YR2YcJvu/view?usp=sharing" target="_blank" class="btn btn-white">📄 CV</a>
+                <a href="https://www.linkedin.com/in/mathieu-dumoulin-7b1209303/" target="_blank" rel="noopener noreferrer" class="btn btn-black">in LinkedIn</a>
+                <a href="https://drive.google.com/file/d/1TMS-FET-TDGa1PqGznRv8P10YR2YcJvu/view?usp=sharing" target="_blank" rel="noopener noreferrer" class="btn btn-white">📄 CV</a>
             </div>
         </div>
     </section>
@@ -483,6 +641,8 @@
     <footer>© 2026 Mathieu DUMOULIN · portfolio</footer>
 
     <script>
+        const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
         // === 1. CHARGEMENT ET EFFET TYPEWRITER + BADGE ===
         const loader = document.getElementById('loader-screen');
         const badge = document.getElementById('welcome-badge');
@@ -493,6 +653,7 @@
         
         async function typeWriter(text, elementId, speed) {
             const el = document.getElementById(elementId);
+            if (prefersReducedMotion) { el.innerHTML = text; return; }
             for (let i = 0; i < text.length; i++) {
                 el.innerHTML += text.charAt(i);
                 await new Promise(r => setTimeout(r, speed));
@@ -500,17 +661,11 @@
         }
 
         window.addEventListener('load', async () => {
-            // Efface l'écran de chargement
-            setTimeout(() => { loader.classList.add('fade-out'); }, 800);
+            setTimeout(() => { loader.classList.add('fade-out'); }, prefersReducedMotion ? 0 : 800);
+            await new Promise(r => setTimeout(r, prefersReducedMotion ? 0 : 1200));
             
-            // Attendre que le loader disparaisse
-            await new Promise(r => setTimeout(r, 1200));
-            
-            // Fait apparaître le badge en douceur avec un effet "Pop"
             badge.classList.add('show-badge');
-            
-            // Petite pause avant de commencer à écrire
-            await new Promise(r => setTimeout(r, 400));
+            await new Promise(r => setTimeout(r, prefersReducedMotion ? 0 : 400));
             
             await typeWriter(p1, "type-part1", 40);
             await typeWriter(p2, "type-part2", 50);
@@ -520,13 +675,46 @@
         // === 2. MENU MOBILE ===
         const menuBtn = document.getElementById('menu-btn');
         const navMenu = document.getElementById('nav-menu');
-        menuBtn.addEventListener('click', () => navMenu.classList.toggle('active'));
+
+        function closeMenu() {
+            navMenu.classList.remove('active');
+            menuBtn.setAttribute('aria-expanded', 'false');
+        }
+        function toggleMenu() {
+            const isActive = navMenu.classList.toggle('active');
+            menuBtn.setAttribute('aria-expanded', String(isActive));
+        }
+
+        menuBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            toggleMenu();
+        });
+
         document.querySelectorAll('nav a').forEach(link => {
-            link.addEventListener('click', () => navMenu.classList.remove('active'));
+            link.addEventListener('click', closeMenu);
+        });
+
+        // Fermer le menu si on clique en dehors
+        document.addEventListener('click', (e) => {
+            if (navMenu.classList.contains('active') &&
+                !navMenu.contains(e.target) &&
+                !menuBtn.contains(e.target)) {
+                closeMenu();
+            }
+        });
+
+        // Fermer le menu avec la touche Échap
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeMenu();
         });
 
         // === 3. ANIMATION AU DÉFILEMENT (INTERSECTION OBSERVER) ===
-        const observerOptions = { root: null, rootMargin: '0px', threshold: 0.15 };
+        const observerOptions = { 
+            root: null, 
+            rootMargin: '0px 0px -100px 0px', 
+            threshold: 0.2 
+        };
+        
         const observer = new IntersectionObserver((entries, observer) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
@@ -540,82 +728,99 @@
             observer.observe(el);
         });
 
-        // === 4. ANIMATION DE PARTICULES EN FOND (NOEUDS RÉSEAUX) LIMITÉE AU HERO ===
-        const canvas = document.getElementById('particles-canvas');
-        const heroSection = document.getElementById('hero-section');
-        const ctx = canvas.getContext('2d');
-        
-        function resizeCanvas() {
-            // S'adapte à la largeur de l'écran et à la hauteur de la section Hero
-            canvas.width = window.innerWidth;
-            canvas.height = heroSection.offsetHeight;
-        }
+        // === 3bis. SURLIGNAGE DU LIEN ACTIF DANS LA NAV ===
+        const navLinks = document.querySelectorAll('#nav-menu a');
+        const sections = document.querySelectorAll('section[id], main[id]');
 
-        const particlesArray = [];
-        const numberOfParticles = 70;
+        const navObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const id = entry.target.getAttribute('id');
+                    navLinks.forEach(link => {
+                        link.classList.toggle('active-link', link.getAttribute('href') === '#' + id);
+                    });
+                }
+            });
+        }, { root: null, rootMargin: '-40% 0px -55% 0px', threshold: 0 });
 
-        class Particle {
-            constructor() {
-                this.x = Math.random() * canvas.width;
-                this.y = Math.random() * canvas.height;
-                this.speedX = Math.random() * 0.5 - 0.25;
-                this.speedY = Math.random() * 0.5 - 0.25;
-            }
-            update() {
-                this.x += this.speedX;
-                this.y += this.speedY;
-                if(this.x < 0 || this.x > canvas.width) this.speedX *= -1;
-                if(this.y < 0 || this.y > canvas.height) this.speedY *= -1;
-            }
-            draw() {
-                ctx.fillStyle = 'rgba(50, 140, 193, 0.4)';
-                ctx.beginPath();
-                ctx.arc(this.x, this.y, 2, 0, Math.PI * 2);
-                ctx.closePath();
-                ctx.fill();
-            }
-        }
+        sections.forEach(sec => navObserver.observe(sec));
 
-        function initParticles() {
-            resizeCanvas();
-            particlesArray.length = 0;
-            for (let i = 0; i < numberOfParticles; i++) {
-                particlesArray.push(new Particle());
+        // === 4. ANIMATION DE PARTICULES EN FOND (NOEUDS RÉSEAUX) ===
+        if (!prefersReducedMotion) {
+            const canvas = document.getElementById('particles-canvas');
+            const heroSection = document.getElementById('hero-section');
+            const ctx = canvas.getContext('2d');
+            
+            function resizeCanvas() {
+                canvas.width = window.innerWidth;
+                canvas.height = heroSection.offsetHeight;
             }
-        }
 
-        function animateParticles() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            for (let i = 0; i < particlesArray.length; i++) {
-                particlesArray[i].update();
-                particlesArray[i].draw();
-                
-                for (let j = i; j < particlesArray.length; j++) {
-                    const dx = particlesArray[i].x - particlesArray[j].x;
-                    const dy = particlesArray[i].y - particlesArray[j].y;
-                    const distance = Math.sqrt(dx * dx + dy * dy);
-                    
-                    if (distance < 110) {
-                        ctx.beginPath();
-                        ctx.strokeStyle = `rgba(50, 140, 193, ${0.2 - distance/550})`;
-                        ctx.lineWidth = 1;
-                        ctx.moveTo(particlesArray[i].x, particlesArray[i].y);
-                        ctx.lineTo(particlesArray[j].x, particlesArray[j].y);
-                        ctx.stroke();
-                        ctx.closePath();
-                    }
+            const particlesArray = [];
+            const numberOfParticles = 70;
+
+            class Particle {
+                constructor() {
+                    this.x = Math.random() * canvas.width;
+                    this.y = Math.random() * canvas.height;
+                    this.speedX = Math.random() * 0.5 - 0.25;
+                    this.speedY = Math.random() * 0.5 - 0.25;
+                }
+                update() {
+                    this.x += this.speedX;
+                    this.y += this.speedY;
+                    if(this.x < 0 || this.x > canvas.width) this.speedX *= -1;
+                    if(this.y < 0 || this.y > canvas.height) this.speedY *= -1;
+                }
+                draw() {
+                    ctx.fillStyle = 'rgba(50, 140, 193, 0.4)';
+                    ctx.beginPath();
+                    ctx.arc(this.x, this.y, 2, 0, Math.PI * 2);
+                    ctx.closePath();
+                    ctx.fill();
                 }
             }
-            requestAnimationFrame(animateParticles);
-        }
 
-        window.addEventListener('resize', initParticles);
-        
-        // Initialiser après un petit délai pour que le CSS ait le temps de calculer la hauteur
-        setTimeout(() => {
-            initParticles();
-            animateParticles();
-        }, 100);
+            function initParticles() {
+                resizeCanvas();
+                particlesArray.length = 0;
+                for (let i = 0; i < numberOfParticles; i++) {
+                    particlesArray.push(new Particle());
+                }
+            }
+
+            function animateParticles() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                for (let i = 0; i < particlesArray.length; i++) {
+                    particlesArray[i].update();
+                    particlesArray[i].draw();
+                    
+                    for (let j = i; j < particlesArray.length; j++) {
+                        const dx = particlesArray[i].x - particlesArray[j].x;
+                        const dy = particlesArray[i].y - particlesArray[j].y;
+                        const distance = Math.sqrt(dx * dx + dy * dy);
+                        
+                        if (distance < 110) {
+                            ctx.beginPath();
+                            ctx.strokeStyle = `rgba(50, 140, 193, ${0.2 - distance/550})`;
+                            ctx.lineWidth = 1;
+                            ctx.moveTo(particlesArray[i].x, particlesArray[i].y);
+                            ctx.lineTo(particlesArray[j].x, particlesArray[j].y);
+                            ctx.stroke();
+                            ctx.closePath();
+                        }
+                    }
+                }
+                requestAnimationFrame(animateParticles);
+            }
+
+            window.addEventListener('resize', initParticles);
+            
+            setTimeout(() => {
+                initParticles();
+                animateParticles();
+            }, 100);
+        }
         
     </script>
 </body>
