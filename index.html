@@ -237,6 +237,57 @@
         @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
         .hero-content p { color: var(--text-muted); font-size: 1.1rem; max-width: 90%; margin-bottom: 2rem; }
 
+        .site-preview { display: flex; flex-direction: column; align-items: center; gap: 0.6rem; margin-bottom: 1.5rem; }
+        .site-preview-video {
+            width: 180px;
+            border-radius: 12px;
+            border: 1px solid #eaeaea;
+            box-shadow: var(--shadow);
+            display: block;
+            background-color: #eaeaea;
+        }
+        .site-preview-label { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px; color: var(--text-muted); font-weight: 600; }
+
+        /* === ZOOM SUR LES IMAGES / VIDÉO DE PROJET === */
+        .zoom-wrap { position: relative; display: block; cursor: zoom-in; border-radius: 12px; }
+        .zoom-wrap .zoom-hint {
+            position: absolute; bottom: 8px; right: 8px;
+            width: 30px; height: 30px; border-radius: 50%;
+            background: rgba(0,0,0,0.55); color: #fff;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 0.9rem; pointer-events: none;
+            opacity: 0.85; transition: var(--transition);
+        }
+        .zoom-wrap:hover .zoom-hint, .zoom-wrap:focus-visible .zoom-hint { opacity: 1; transform: scale(1.08); }
+        .zoom-wrap:hover img, .zoom-wrap:hover video { filter: brightness(0.97); }
+
+        .lightbox {
+            position: fixed; inset: 0;
+            background: rgba(10, 15, 20, 0.9);
+            display: flex; align-items: center; justify-content: center;
+            padding: 3rem 1.5rem;
+            z-index: 10050;
+            opacity: 0; visibility: hidden;
+            transition: opacity 0.25s ease, visibility 0.25s ease;
+        }
+        .lightbox.active { opacity: 1; visibility: visible; }
+        .lightbox-content img, .lightbox-content video {
+            max-width: 90vw; max-height: 85vh;
+            border-radius: 12px;
+            box-shadow: 0 25px 60px rgba(0,0,0,0.45);
+        }
+        .lightbox-close {
+            position: fixed; top: 1.5rem; right: 1.5rem;
+            width: 46px; height: 46px; border-radius: 50%;
+            background: #ffffff; color: #1a1a1a;
+            border: none; font-size: 1.2rem; cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+            z-index: 10051;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+            transition: var(--transition);
+        }
+        .lightbox-close:hover { transform: scale(1.08); }
+
         /* === RESTE DU CSS === */
         .profile-card { background-color: var(--card-bg); padding: 2.5rem; border-radius: var(--border-radius); box-shadow: var(--shadow); width: 420px; transition: var(--transition); flex-shrink: 0; border: 1px solid #f0eee6; z-index: 2; }
         .profile-card:hover { transform: translateY(-5px); box-shadow: var(--shadow-hover); }
@@ -364,6 +415,56 @@
         .contact-banner:hover { box-shadow: var(--shadow-hover); }
         .contact-banner h2 { font-size: 2rem; margin-bottom: 1rem; max-width: 500px; font-weight: 700; }
         .contact-banner p { color: var(--text-muted); max-width: 500px; }
+        .contact-email { display: inline-flex; align-items: center; gap: 0.5rem; color: var(--accent-color); font-weight: 600; text-decoration: none; margin-top: 0.5rem; font-size: 0.95rem; }
+        .contact-email:hover { text-decoration: underline; }
+        .contact-actions { display: flex; flex-direction: column; gap: 0.8rem; align-items: flex-end; }
+        .contact-actions-row { display: flex; gap: 0.8rem; }
+
+        /* === PROJETS === */
+        .project-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; }
+        .project-card { background-color: var(--card-bg); padding: 2.5rem; border-radius: var(--border-radius); box-shadow: var(--shadow); border: 1px solid #f0eee6; transition: var(--transition); display: flex; flex-direction: column; }
+        .project-card:hover { transform: translateY(-5px); box-shadow: var(--shadow-hover); }
+        .project-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 1rem; margin-bottom: 1.2rem; }
+        .project-badge { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1px; font-weight: 700; padding: 0.35rem 0.8rem; border-radius: 20px; white-space: nowrap; }
+        .project-badge.badge-travail { background-color: #eef4f9; color: #0b3c5d; }
+        .project-badge.badge-iut { background-color: #f7ece7; color: var(--accent-color); }
+        .project-card h3 { font-size: 1.4rem; margin-bottom: 1rem; font-weight: 700; }
+        .project-image { width: 100%; border-radius: 12px; border: 1px solid #eaeaea; margin-bottom: 1.5rem; background-color: #fafafa; }
+        .project-image-row { display: flex; gap: 1rem; margin-bottom: 1.5rem; }
+        .project-image-row .zoom-wrap { width: 50%; }
+        .project-image-row .zoom-wrap img { width: 100%; max-height: 260px; object-fit: contain; border-radius: 12px; border: 1px solid #eaeaea; background-color: #fafafa; }
+        .project-card p { color: var(--text-muted); font-size: 0.95rem; margin-bottom: 1rem; }
+        .project-card p:last-of-type { margin-bottom: 1.5rem; }
+        .project-card .tags { margin-top: auto; }
+        .tag-light { background-color: #f7f5f0; border: 1px solid #eaeaea; padding: 0.3rem 0.8rem; border-radius: 20px; font-size: 0.8rem; color: var(--text-muted); font-weight: 500; }
+
+        /* === CONFORTS DE NAVIGATION === */
+        #scroll-progress {
+            position: fixed; top: 0; left: 0;
+            height: 3px; width: 0%;
+            background: linear-gradient(90deg, var(--accent-color), #328cc1);
+            z-index: 10001;
+            transition: width 0.1s linear;
+        }
+        #back-to-top {
+            position: fixed;
+            bottom: 1.8rem; right: 1.8rem;
+            width: 48px; height: 48px;
+            border-radius: 50%;
+            background-color: #1a1a1a;
+            color: #ffffff;
+            border: none;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.3rem;
+            cursor: pointer;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.18);
+            opacity: 0; visibility: hidden; transform: translateY(15px);
+            transition: var(--transition);
+            z-index: 999;
+        }
+        #back-to-top.show { opacity: 1; visibility: visible; transform: translateY(0); }
+        #back-to-top:hover { background-color: var(--accent-color); transform: translateY(-3px); }
+        #back-to-top:active { transform: scale(0.92); }
 
         footer { text-align: center; padding: 2.5rem 0; color: var(--text-muted); font-size: 0.9rem; border-top: 1px solid #e8e4dc; }
 
@@ -383,6 +484,10 @@
             .contact-banner { flex-direction: column; text-align: center; gap: 2rem; padding: 2rem 1.5rem; }
             .hero-content h1 { font-size: 2.1rem; min-height: 120px; }
             .section-dark { padding: 2.5rem 1.5rem; }
+            .contact-actions { align-items: stretch; width: 100%; }
+            .contact-actions-row { flex-direction: column; }
+            #back-to-top { bottom: 1.2rem; right: 1.2rem; width: 44px; height: 44px; }
+            .site-preview-video { width: 140px; }
         }
 
         /* === ACCESSIBILITÉ : réduction des animations === */
@@ -402,6 +507,18 @@
 
     <!-- LIEN D'ÉVITEMENT (ACCESSIBILITÉ) -->
     <a href="#main-content" class="skip-link">Aller au contenu principal</a>
+
+    <!-- BARRE DE PROGRESSION DE LECTURE -->
+    <div id="scroll-progress" aria-hidden="true"></div>
+
+    <!-- BOUTON RETOUR EN HAUT -->
+    <button id="back-to-top" aria-label="Retourner en haut de la page">↑</button>
+
+    <!-- LIGHTBOX (ZOOM SUR LES IMAGES / VIDÉO) -->
+    <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-hidden="true">
+        <button class="lightbox-close" id="lightbox-close" aria-label="Fermer l'aperçu">✕</button>
+        <div class="lightbox-content" id="lightbox-content"></div>
+    </div>
 
     <!-- ÉCRAN DE CHARGEMENT -->
     <div id="loader-screen">
@@ -426,6 +543,7 @@
             <a href="#stack">Stack</a>
             <a href="#expertise">Expertise</a>
             <a href="#experiences">Expériences</a>
+            <a href="#projets">Projets</a>
             <a href="#contact">Contact</a>
         </nav>
         <div class="header-actions">
@@ -631,17 +749,91 @@
         </div>
     </section>
 
+    <!-- PROJETS SECTION -->
+    <section id="projets">
+        <div class="section-header fade-in-up">
+            <span class="section-subtitle">Projets</span>
+            <h2 class="section-title">Quelques réalisations concrètes.</h2>
+        </div>
+        <div class="project-grid">
+            <div class="project-card fade-in-up">
+                <div class="project-top">
+                    <h3>Réseau pédagogique — Pont Wi-Fi inter-bâtiments</h3>
+                    <span class="project-badge badge-travail">Projet Travail</span>
+                </div>
+                <div class="zoom-wrap">
+                    <img src="images/reseau-pedagogique-architecture.png" alt="Schéma d'architecture du réseau pédagogique : bâtiment 14 (serveur IPBX, caméra, répéteur Wi-Fi) relié au bâtiment 12 par un pont Wi-Fi entre deux antennes directionnelles, jusqu'au switch, au téléphone et au poste de lecture du flux vidéo" class="project-image" loading="lazy">
+                    <span class="zoom-hint" aria-hidden="true">🔍</span>
+                </div>
+                <p>
+                    Conception et déploiement d'un réseau pédagogique complet pour le CAN Nancy, en partenariat avec le lycée Jean Prouvé, destiné à des lycéens en classe de défense. Objectif : relier deux bâtiments distants de 50&nbsp;m via un pont Wi-Fi (antennes directionnelles 25&nbsp;dBi, alimentation PoE) pour faire transiter un flux vidéo (caméra en RTSP via répéteur WISP) et de la téléphonie IP (serveur FreePBX, comptes SIP par adresse MAC).
+                </p>
+                <p>
+                    L'atelier s'appuie sur Wireshark et du port mirroring pour faire visualiser aux élèves, en direct, l'établissement d'un appel SIP/RTP et les sensibiliser à la sécurité des flux non chiffrés.
+                </p>
+                <div class="tags">
+                    <span class="tag-light">Pont Wi-Fi</span>
+                    <span class="tag-light">IPBX / FreePBX</span>
+                    <span class="tag-light">SIP & RTP</span>
+                    <span class="tag-light">Wireshark</span>
+                    <span class="tag-light">RTSP</span>
+                </div>
+            </div>
+            <div class="project-card fade-in-up delay-1">
+                <div class="project-top">
+                    <h3>FH-Maps — Annuaire technique mobile</h3>
+                    <span class="project-badge badge-iut">Projet IUT</span>
+                </div>
+                <div class="project-image-row">
+                    <div class="zoom-wrap">
+                        <img src="images/fh-maps-accueil.png" alt="Écran d'accueil de l'application FH-Maps : barre de recherche et liste des sites d'intervention" loading="lazy">
+                        <span class="zoom-hint" aria-hidden="true">🔍</span>
+                    </div>
+                    <div class="zoom-wrap">
+                        <img src="images/fh-maps-detail.png" alt="Fiche technique d'un site dans FH-Maps : code d'accès, bouton GPS, partage et appel vers la supervision" loading="lazy">
+                        <span class="zoom-hint" aria-hidden="true">🔍</span>
+                    </div>
+                </div>
+                <p>
+                    Application Android développée en binôme dans le cadre de la SAÉ 3.02 (Développer des applications communicantes), inspirée d'un besoin réel de mon équipe d'intervention : remplacer les vieux GPS TomTom par un annuaire de poche des sites (coordonnées fictives pour raisons de confidentialité). L'appli liste les sites, affiche leurs informations sécurisées (codes d'accès, infos techniques) et permet de lancer un itinéraire ou d'appeler la supervision en un clic.
+                </p>
+                <p>
+                    Développée en Java/XML sous Android Studio, avec une liste dynamique en RecyclerView + Adapter, une navigation interne en Intent explicite, et des Intents implicites pour déléguer le GPS (Waze/Google Maps), l'appel et le partage aux autres applications du téléphone.
+                </p>
+                <div class="site-preview" id="site-preview">
+                    <div class="zoom-wrap">
+                        <video id="preview-video" class="site-preview-video" autoplay muted loop playsinline aria-label="Aperçu rapide de la navigation sur le portfolio">
+                            <source src="images/demo-preview.mp4" type="video/mp4">
+                        </video>
+                        <span class="zoom-hint" aria-hidden="true">🔍</span>
+                    </div>
+                    <span class="site-preview-label">Aperçu du site</span>
+                </div>
+                <div class="tags">
+                    <span class="tag-light">Android Studio</span>
+                    <span class="tag-light">Java / XML</span>
+                    <span class="tag-light">RecyclerView</span>
+                    <span class="tag-light">Intents</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- CONTACT BANNER -->
     <section id="contact">
         <div class="contact-banner fade-in-up">
             <div>
                 <span class="section-subtitle">Contact</span>
                 <h2>Merci d'avoir pris le temps de parcourir mon portfolio.</h2>
-                <p>Vous pouvez retrouver ici les liens vers mon LinkedIn et mon CV.</p>
+                <p>N'hésitez pas à me contacter par mail, ou à retrouver mon LinkedIn et mon CV.</p>
+                <a href="mailto:cmath1003@gmail.com" class="contact-email">✉️ cmath1003@gmail.com</a>
             </div>
             <div class="contact-actions">
-                <a href="https://www.linkedin.com/in/mathieu-dumoulin-7b1209303/" target="_blank" rel="noopener noreferrer" class="btn btn-black">in LinkedIn</a>
-                <a href="https://drive.google.com/file/d/1TMS-FET-TDGa1PqGznRv8P10YR2YcJvu/view?usp=sharing" target="_blank" rel="noopener noreferrer" class="btn btn-white">📄 CV</a>
+                <div class="contact-actions-row">
+                    <a href="https://www.linkedin.com/in/mathieu-dumoulin-7b1209303/" target="_blank" rel="noopener noreferrer" class="btn btn-black">in LinkedIn</a>
+                    <a href="https://drive.google.com/file/d/1TMS-FET-TDGa1PqGznRv8P10YR2YcJvu/view?usp=sharing" target="_blank" rel="noopener noreferrer" class="btn btn-white">📄 CV</a>
+                </div>
+                <a href="mailto:cmath1003@gmail.com" class="btn btn-white">✉️ Me contacter</a>
             </div>
         </div>
     </section>
@@ -752,6 +944,90 @@
         }, { root: null, rootMargin: '-40% 0px -55% 0px', threshold: 0 });
 
         sections.forEach(sec => navObserver.observe(sec));
+
+        // === 3ter. BARRE DE PROGRESSION + BOUTON RETOUR EN HAUT ===
+        const scrollProgress = document.getElementById('scroll-progress');
+        const backToTop = document.getElementById('back-to-top');
+
+        function updateScrollUI() {
+            const scrollTop = window.scrollY || document.documentElement.scrollTop;
+            const docHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+            scrollProgress.style.width = progress + '%';
+
+            if (scrollTop > 500) {
+                backToTop.classList.add('show');
+            } else {
+                backToTop.classList.remove('show');
+            }
+        }
+
+        window.addEventListener('scroll', updateScrollUI, { passive: true });
+        updateScrollUI();
+
+        backToTop.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: prefersReducedMotion ? 'auto' : 'smooth' });
+        });
+
+        // === 3quater. VIDÉO D'APERÇU DU SITE ===
+        // Tant que la vidéo n'est pas ajoutée (images/demo-preview.mp4), on masque
+        // proprement le bloc plutôt que d'afficher un cadre vide/cassé.
+        const previewVideo = document.getElementById('preview-video');
+        const previewWrapper = document.getElementById('site-preview');
+        if (previewVideo && previewWrapper) {
+            previewVideo.addEventListener('error', () => { previewWrapper.style.display = 'none'; });
+        }
+
+        // === 3quinquies. LIGHTBOX : ZOOM SUR LES IMAGES / VIDÉO DE PROJET ===
+        const lightbox = document.getElementById('lightbox');
+        const lightboxContent = document.getElementById('lightbox-content');
+        const lightboxClose = document.getElementById('lightbox-close');
+
+        function openLightbox(media) {
+            if (!media) return;
+            lightboxContent.innerHTML = '';
+            if (media.tagName === 'IMG') {
+                const img = document.createElement('img');
+                img.src = media.src;
+                img.alt = media.alt || '';
+                lightboxContent.appendChild(img);
+            } else if (media.tagName === 'VIDEO') {
+                const video = document.createElement('video');
+                const source = media.querySelector('source');
+                video.src = source ? source.src : media.src;
+                video.autoplay = true;
+                video.loop = true;
+                video.muted = true;
+                video.playsInline = true;
+                video.controls = true;
+                lightboxContent.appendChild(video);
+            }
+            lightbox.classList.add('active');
+            lightbox.setAttribute('aria-hidden', 'false');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeLightbox() {
+            lightbox.classList.remove('active');
+            lightbox.setAttribute('aria-hidden', 'true');
+            document.body.style.overflow = '';
+            lightboxContent.innerHTML = '';
+        }
+
+        document.querySelectorAll('.zoom-wrap').forEach(wrap => {
+            const media = wrap.querySelector('img, video');
+            wrap.setAttribute('tabindex', '0');
+            wrap.setAttribute('role', 'button');
+            wrap.setAttribute('aria-label', 'Agrandir');
+            wrap.addEventListener('click', () => openLightbox(media));
+            wrap.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openLightbox(media); }
+            });
+        });
+
+        lightboxClose.addEventListener('click', closeLightbox);
+        lightbox.addEventListener('click', (e) => { if (e.target === lightbox) closeLightbox(); });
+        document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeLightbox(); });
 
         // === 4. ANIMATION DE PARTICULES EN FOND (NOEUDS RÉSEAUX) ===
         if (!prefersReducedMotion) {
