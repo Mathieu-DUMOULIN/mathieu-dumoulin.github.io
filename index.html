@@ -46,7 +46,7 @@
     }
     </script>
 
-    <link rel="icon" type="image/x-icon" href="images/1454827.png">
+    <link rel="icon" type="image/png" href="images/logo.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -54,7 +54,7 @@
     <style>
         :root {
             --bg-color: #f7f5f0;
-            --header-bg: rgba(239, 236, 228, 0.85); /* Semi-transparent pour l'effet sticky */
+            --header-bg: rgba(239, 236, 228, 0.85);
             --card-bg: #ffffff;
             --text-main: #1a1a1a;
             --text-muted: #666666;
@@ -118,36 +118,74 @@
         .skip-link:focus { top: 1rem; }
         a:focus-visible, button:focus-visible, .btn:focus-visible { outline: none; box-shadow: var(--focus-ring); border-radius: 10px; }
 
-        /* === ÉCRAN DE CHARGEMENT === */
+        /* === ÉCRAN DE CHARGEMENT MODERNE === */
         #loader-screen {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background-color: var(--bg-color);
-            background-image: radial-gradient(circle 400px at 50% 50%, rgba(49, 130, 193, 0.12) 0%, rgba(247, 245, 240, 0) 100%),
-                              radial-gradient(circle 600px at 50% 50%, rgba(239, 236, 228, 0.8) 0%, transparent 100%);
             display: flex; flex-direction: column; justify-content: center; align-items: center;
-            z-index: 9999; transition: opacity 0.8s ease, visibility 0.8s ease;
+            z-index: 9999; transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.8s;
+            /* Fond quadrillé discret pour le thème réseau */
+            background-image: 
+                linear-gradient(rgba(11, 60, 93, 0.04) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(11, 60, 93, 0.04) 1px, transparent 1px);
+            background-size: 30px 30px;
         }
-        .loader-content { text-align: center; display: flex; flex-direction: column; align-items: center; gap: 0.5rem; position: relative; z-index: 2; }
-        .loader-subtitle { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 3px; color: var(--text-muted); font-weight: 600; }
-        .loader-title { font-size: 2.2rem; font-weight: 700; color: var(--text-main); margin-bottom: 0.5rem; }
-        .loader-text { font-size: 0.9rem; color: var(--text-muted); margin-bottom: 1.5rem; }
-        .loader-bar-container { width: 220px; height: 6px; background-color: #e5e0d8; border-radius: 10px; overflow: hidden; position: relative; }
-        .loader-bar-fill { position: absolute; top: 0; left: 0; height: 100%; width: 0%; background: linear-gradient(90deg, #0b3c5d 0%, #328cc1 100%); border-radius: 10px; animation: loading-progress 1.5s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
-        @keyframes loading-progress { 0% { width: 0%; } 50% { width: 70%; } 100% { width: 100%; } }
+        
+        .modern-loader {
+            position: relative;
+            width: 65px; height: 65px;
+            margin-bottom: 2rem;
+        }
+        .modern-loader-ring {
+            position: absolute;
+            inset: 0;
+            border: 2px solid rgba(50, 140, 193, 0.15);
+            border-radius: 50%;
+        }
+        .modern-loader-ring::before {
+            content: '';
+            position: absolute;
+            inset: -2px;
+            border: 2px solid transparent;
+            border-top-color: var(--accent-color);
+            border-right-color: #328cc1;
+            border-radius: 50%;
+            animation: spin-loader 1.2s cubic-bezier(0.68, -0.55, 0.265, 1.55) infinite;
+        }
+        .modern-loader-core {
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            width: 14px; height: 14px;
+            background-color: #328cc1;
+            border-radius: 50%;
+            box-shadow: 0 0 15px rgba(50, 140, 193, 0.6);
+            animation: pulse-core 1.5s ease-in-out infinite alternate;
+        }
+        
+        @keyframes spin-loader { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        @keyframes pulse-core { 
+            0% { transform: translate(-50%, -50%) scale(0.7); opacity: 0.6; } 
+            100% { transform: translate(-50%, -50%) scale(1.2); opacity: 1; box-shadow: 0 0 25px rgba(50, 140, 193, 1); } 
+        }
+        
+        .loader-content { text-align: center; display: flex; flex-direction: column; align-items: center; position: relative; z-index: 2; }
+        .loader-title { font-size: 1.3rem; font-weight: 700; color: var(--text-main); margin-bottom: 0.5rem; letter-spacing: 2px; text-transform: uppercase; }
+        .loader-text { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 4px; color: var(--accent-color); font-weight: 700; }
         .fade-out { opacity: 0; visibility: hidden; }
 
         /* === HEADER STICKY (Flottant) === */
         header {
             display: flex; justify-content: space-between; align-items: center;
             background-color: var(--header-bg);
-            backdrop-filter: blur(12px); /* Effet verre dépoli */
+            backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
             padding: 1.2rem 2.5rem; 
             border-radius: 0 0 var(--border-radius) var(--border-radius);
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05); 
             margin-bottom: 4rem;
             border-bottom: 1px solid rgba(255, 255, 255, 0.5); 
-            position: sticky; /* Reste en haut au scroll */
+            position: sticky; 
             top: 0;
             z-index: 9000;
         }
@@ -205,9 +243,22 @@
         .zoom-wrap:hover .zoom-hint, .zoom-wrap:focus-visible .zoom-hint { opacity: 1; transform: scale(1.08); }
         .zoom-wrap:hover img, .zoom-wrap:hover video { filter: brightness(0.97); }
 
+        /* === CORRECTION LIGHTBOX ICI === */
         .lightbox { position: fixed; inset: 0; background: rgba(10, 15, 20, 0.9); display: flex; align-items: center; justify-content: center; padding: 3rem 1.5rem; z-index: 10050; opacity: 0; visibility: hidden; transition: opacity 0.25s ease, visibility 0.25s ease; }
         .lightbox.active { opacity: 1; visibility: visible; }
-        .lightbox-content img, .lightbox-content video { max-width: 90vw; max-height: 85vh; border-radius: 12px; box-shadow: 0 25px 60px rgba(0,0,0,0.45); }
+        
+        .lightbox-content { display: flex; justify-content: center; align-items: center; width: 100%; height: 100%; }
+        .lightbox-content img, .lightbox-content video { 
+            max-width: 90vw; /* Taille limite max horizontale */
+            max-height: 85vh; /* Taille limite max verticale */
+            width: auto; /* S'adapte au contenu sans forcer la largeur */
+            height: auto; /* S'adapte au contenu sans forcer la hauteur */
+            object-fit: contain; 
+            border-radius: 12px; 
+            box-shadow: 0 25px 60px rgba(0,0,0,0.45); 
+            /* Fond blanc supprimé pour éviter les grands cadres blancs vides */
+        }
+        
         .lightbox-close { position: fixed; top: 1.5rem; right: 1.5rem; width: 46px; height: 46px; border-radius: 50%; background: #ffffff; color: #1a1a1a; border: none; font-size: 1.2rem; cursor: pointer; display: flex; align-items: center; justify-content: center; z-index: 10051; box-shadow: 0 8px 20px rgba(0,0,0,0.25); transition: var(--transition); }
         .lightbox-close:hover { transform: scale(1.08); }
 
@@ -245,7 +296,7 @@
         .delay-3 { transition-delay: 0.6s; }
         .delay-4 { transition-delay: 0.8s; }
 
-        section { margin-bottom: 8rem; scroll-margin-top: 120px; /* Compense la hauteur du menu sticky au clic d'une ancre */ }
+        section { margin-bottom: 8rem; scroll-margin-top: 120px; }
         .section-header { margin-bottom: 3rem; }
         .section-subtitle { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px; color: var(--accent-color); margin-bottom: 1rem; display: block; font-weight: 700; }
         .section-title { font-size: 2.5rem; font-weight: 700; max-width: 600px; }
@@ -271,7 +322,6 @@
         .section-dark .section-title { color: #ffffff; }
 
         .expertise-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; position: relative; z-index: 1; }
-        /* Modifications ici : retrait des icônes et ajout de la bordure colorée */
         .card { background-color: rgba(255,255,255,0.06); backdrop-filter: blur(6px); padding: 2.5rem 2rem; border-radius: var(--border-radius); transition: var(--transition); border: 1px solid rgba(255,255,255,0.12); border-top: 3px solid transparent; }
         .card:hover { transform: translateY(-5px); background-color: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.22); border-top-color: #328cc1; }
         .card:active { transform: scale(0.98); }
@@ -317,12 +367,12 @@
         /* === CONFORTS DE NAVIGATION === */
         #scroll-progress {
             position: fixed; top: 0; left: 0;
-            height: 5px; /* Épaissi à 5px */
+            height: 5px;
             width: 0%;
             background: linear-gradient(90deg, #328cc1, var(--accent-color));
             z-index: 10001;
             transition: width 0.1s linear;
-            box-shadow: 0 0 10px rgba(50, 140, 193, 0.7); /* Effet GLOW (lumière) */
+            box-shadow: 0 0 10px rgba(50, 140, 193, 0.7); 
         }
         #back-to-top { position: fixed; bottom: 1.8rem; right: 1.8rem; width: 48px; height: 48px; border-radius: 50%; background-color: #1a1a1a; color: #ffffff; border: none; display: flex; align-items: center; justify-content: center; font-size: 1.3rem; cursor: pointer; box-shadow: 0 8px 20px rgba(0,0,0,0.18); opacity: 0; visibility: hidden; transform: translateY(15px); transition: var(--transition); z-index: 999; }
         #back-to-top.show { opacity: 1; visibility: visible; transform: translateY(0); }
@@ -376,12 +426,12 @@
 
     <div id="loader-screen">
         <div class="loader-content">
-            <span class="loader-subtitle">PORTFOLIO</span>
-            <h1 class="loader-title">Mathieu Dumoulin</h1>
-            <p class="loader-text">Chargement du portfolio...</p>
-            <div class="loader-bar-container">
-                <div class="loader-bar-fill"></div>
+            <div class="modern-loader">
+                <div class="modern-loader-ring"></div>
+                <div class="modern-loader-core"></div>
             </div>
+            <h1 class="loader-title">Mathieu Dumoulin</h1>
+            <p class="loader-text">Initialisation</p>
         </div>
     </div>
 
@@ -475,9 +525,9 @@
                 <h2 class="section-title">En savoir un peu plus sur mon parcours.</h2>
             </div>
             <div class="split-card fade-in-right delay-1">
-                <p>Étudiant en 3ème année de BUT Réseaux et Télécommunications, je souhaite mettre mes compétences techniques et ma discipline au service des infrastructures critiques.</p>
-                <p>Mon parcours (parcours ROM - Réseaux Opérateurs Multimédia) m'a permis de développer de solides bases en routage (OSPF, statique), en adressage IP (IPv4), et en configuration d'équipements Cisco (switchs et routeurs).</p>
-                <p>L’exigence de mon alternance au sein du Centre d'Appui Numérique Nancy (Ministère des Armées) m’a permis de développer une rigueur professionnelle, un sens aigu de la confidentialité et du respect strict des procédures d'intervention.</p>
+                <p>Actuellement en 3ème année de BUT Réseaux et Télécommunication, je cherche à mettre mes compétences techniques pour participer au maintien et à l’évolution de vos infrastructures réseau et SI.</p>
+                <p>Mon parcours ROM (Réseaux Opérateurs Multimédia) m'a donné de solides bases en routage (OSPF, statique), en adressage IPv4, et en configuration d'équipements Cisco (switchs et routeurs).</p>
+                <p>Mon alternance au Centre d'Appui Numérique de Nancy, au sein du Ministère des Armées, a été formatrice : elle m'a appris à travailler avec rigueur, à respecter les procédures d'intervention.</p>
             </div>
         </div>
     </section>
@@ -532,7 +582,6 @@
         </div>
     </section>
 
-    <!-- SECTION EXPERTISE MISE A JOUR (Sans images) -->
     <section id="expertise">
         <div class="section-dark">
         <div class="section-header fade-in-up">
@@ -584,7 +633,7 @@
                 <h3>Apprenti Technicien — Cellule d'Intervention Réseaux</h3>
                 <ul class="exp-list">
                     <li>Analyse de la supervision pour identifier les alertes et préparer les interventions.</li>
-                    <li>Diagnostics poussés sur le terrain (photomètre, réflectomètre) et configuration d'équipements Cisco.</li>
+                    <li>Diagnostics poussés sur le terrain (photomètre, réflectomètre, analyseur de spectre) et configuration d'équipements Cisco.</li>
                     <li>Maintenance de routine et dépannage sur réseaux SOCRATE et DESCARTES.</li>
                     <li>Rédaction de comptes-rendus et mise à jour de l'inventaire logistique.</li>
                 </ul>
@@ -687,6 +736,7 @@
     <script>
         const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+        // === 1. CHARGEMENT ET EFFET TYPEWRITER + BADGE ===
         const loader = document.getElementById('loader-screen');
         const badge = document.getElementById('welcome-badge');
         
@@ -704,8 +754,8 @@
         }
 
         window.addEventListener('load', async () => {
-            setTimeout(() => { loader.classList.add('fade-out'); }, prefersReducedMotion ? 0 : 800);
-            await new Promise(r => setTimeout(r, prefersReducedMotion ? 0 : 1200));
+            setTimeout(() => { loader.classList.add('fade-out'); }, prefersReducedMotion ? 0 : 1000);
+            await new Promise(r => setTimeout(r, prefersReducedMotion ? 0 : 1400));
             
             badge.classList.add('show-badge');
             await new Promise(r => setTimeout(r, prefersReducedMotion ? 0 : 400));
@@ -715,6 +765,7 @@
             await typeWriter(p3, "type-part3", 35);
         });
 
+        // === 2. MENU MOBILE ===
         const menuBtn = document.getElementById('menu-btn');
         const navMenu = document.getElementById('nav-menu');
 
@@ -743,6 +794,7 @@
         });
         document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeMenu(); });
 
+        // === 3. ANIMATIONS AU DÉFILEMENT ===
         const observerOptions = { root: null, rootMargin: '0px 0px -100px 0px', threshold: 0.2 };
         const observer = new IntersectionObserver((entries, observer) => {
             entries.forEach(entry => {
@@ -755,6 +807,7 @@
 
         document.querySelectorAll('.fade-in-up, .fade-in-left, .fade-in-right').forEach(el => { observer.observe(el); });
 
+        // === 4. SURLIGNAGE NAV LORS DU SCROLL ===
         const navLinks = document.querySelectorAll('#nav-menu a');
         const sections = document.querySelectorAll('section[id], main[id]');
 
@@ -771,7 +824,7 @@
 
         sections.forEach(sec => navObserver.observe(sec));
 
-        // === GESTION DE LA BARRE DE PROGRESSION ===
+        // === 5. GESTION DE LA BARRE DE PROGRESSION ===
         const scrollProgress = document.getElementById('scroll-progress');
         const backToTop = document.getElementById('back-to-top');
 
@@ -795,12 +848,14 @@
             window.scrollTo({ top: 0, behavior: prefersReducedMotion ? 'auto' : 'smooth' });
         });
 
+        // === 6. MASQUAGE VIDÉO SI ERREUR ===
         const previewVideo = document.getElementById('preview-video');
         const previewWrapper = document.getElementById('site-preview');
         if (previewVideo && previewWrapper) {
             previewVideo.addEventListener('error', () => { previewWrapper.style.display = 'none'; });
         }
 
+        // === 7. LIGHTBOX (ZOOM CORRIGÉ) ===
         const lightbox = document.getElementById('lightbox');
         const lightboxContent = document.getElementById('lightbox-content');
         const lightboxClose = document.getElementById('lightbox-close');
@@ -843,6 +898,7 @@
         lightbox.addEventListener('click', (e) => { if (e.target === lightbox) closeLightbox(); });
         document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeLightbox(); });
 
+        // === 8. ANIMATION DE PARTICULES EN FOND ===
         if (!prefersReducedMotion) {
             const canvas = document.getElementById('particles-canvas');
             const heroSection = document.getElementById('hero-section');
